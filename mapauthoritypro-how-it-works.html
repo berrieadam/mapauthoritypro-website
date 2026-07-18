@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How It Works — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;
+  --navy-mid:#162057;
+  --cyan:#06B6D4;
+  --cyan-light:#E0F7FA;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --text:#0B1437;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --radius:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,20,55,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;
+  position:relative;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:800;
+  color:#fff;text-decoration:none;letter-spacing:-0.3px;
+  z-index:1001;position:relative;
+}
+.nav-logo span{color:#06B6D4}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001;}
+.nav-links li{position:relative;}
+.nav-links a{
+  color:rgba(255,255,255,0.75);
+  text-decoration:none;font-size:14px;font-weight:500;
+  padding:8px 14px;border-radius:7px;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s,background .15s;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block;}
+.nav-links li:hover .chevron{transform:rotate(180deg)}
+
+/* DROPDOWN — fixed so it never overlaps content and is always clickable */
+.dropdown{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  padding-top:8px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+  z-index:9999;
+  min-width:240px;
+}
+.nav-links li:hover .dropdown{
+  opacity:1;
+  pointer-events:auto;
+}
+.dropdown-inner{
+  background:#ffffff;
+  border:1px solid #E2E8F0;
+  border-radius:12px;
+  padding:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.dropdown a{
+  color:#0B1437 !important;
+  font-size:13.5px;font-weight:500;
+  padding:8px 12px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;
+  background:transparent !important;
+  text-decoration:none;
+  width:100%;
+}
+.dropdown a:hover{background:#F7F8FC !important;color:#0B1437 !important;}
+.dropdown-icon{
+  width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.dd-text{display:flex;flex-direction:column}
+.dd-label{font-size:13px;font-weight:500;color:#0B1437}
+.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
+
+.nav-cta{
+  background:#06B6D4;color:#0B1437;
+  font-size:13.5px;font-weight:600;
+  padding:9px 20px;border-radius:8px;
+  text-decoration:none;white-space:nowrap;
+  transition:background .15s;
+  position:relative;z-index:1001;
+}
+.nav-cta:hover{background:#08C9E8;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative;}
+.hamburger svg{width:22px;height:22px}
+.mobile-menu{
+  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:#0B1437;z-index:999;padding:24px;overflow-y:auto;
+}
+.mobile-menu.open{display:block}
+.mobile-menu a{
+  display:block;color:rgba(255,255,255,0.8);text-decoration:none;
+  font-size:16px;font-weight:500;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .mm-cta{
+  margin-top:20px;background:#06B6D4;color:#0B1437;
+  text-align:center;border-radius:10px;font-weight:600;border:none;
+}
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+}
+/* PAGE HERO */
+.page-hero{background:var(--navy);padding:140px 24px 96px;position:relative;overflow:hidden;text-align:center}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.page-hero-inner{max-width:760px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,62px);font-weight:800;color:#fff;line-height:1.08;letter-spacing:-1px;margin-bottom:18px}
+.page-hero h1 span{color:var(--cyan)}
+.page-hero p{font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;max-width:560px;margin:0 auto}
+
+/* SHARED */
+.section{padding:88px 24px}
+.section-inner{max-width:1160px;margin:0 auto}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-0.6px;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--muted);line-height:1.7;max-width:520px}
+
+/* OVERVIEW TIMELINE */
+.timeline{margin-top:64px;position:relative}
+.timeline::before{content:'';position:absolute;left:32px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--cyan),rgba(6,182,212,0.1));z-index:0}
+.tl-item{display:flex;gap:40px;margin-bottom:56px;position:relative;z-index:1}
+.tl-item:last-child{margin-bottom:0}
+.tl-left{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:0}
+.tl-dot{width:64px;height:64px;border-radius:50%;background:var(--navy);border:3px solid var(--cyan);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;position:relative;z-index:1}
+.tl-right{flex:1;padding-top:12px}
+.tl-step{font-size:11.5px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.tl-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:10px;letter-spacing:-0.3px}
+.tl-text{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:16px}
+.tl-details{display:flex;flex-direction:column;gap:8px}
+.tl-detail{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text)}
+.tl-detail::before{content:'→';color:var(--cyan);font-weight:600;flex-shrink:0;margin-top:1px}
+
+/* AUTOMATION DEEP DIVE */
+.dark-section{background:var(--navy);padding:88px 24px}
+.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;margin-top:56px}
+.auto-item{background:rgba(255,255,255,0.02);padding:36px;transition:background .2s}
+.auto-item:hover{background:rgba(6,182,212,0.05)}
+.auto-icon{font-size:28px;margin-bottom:16px}
+.auto-title{font-size:18px;font-weight:600;color:#fff;margin-bottom:8px}
+.auto-text{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:14px}
+.auto-tag{font-size:11.5px;font-weight:600;color:var(--cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);padding:3px 10px;border-radius:99px;display:inline-block}
+.trigger-badge{display:flex;align-items:center;gap:7px;background:rgba(6,182,212,0.08);border:1px solid rgba(6,182,212,0.15);border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:12.5px;color:rgba(255,255,255,0.6)}
+.trigger-badge strong{color:var(--cyan)}
+
+/* FLOW DIAGRAM */
+.flow-section{background:var(--off);padding:88px 24px}
+.flow-diagram{max-width:700px;margin:56px auto 0;display:flex;flex-direction:column;align-items:center;gap:0}
+.flow-node{width:100%;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;align-items:flex-start;gap:16px;transition:all .2s}
+.flow-node:hover{border-color:var(--cyan);box-shadow:0 4px 20px rgba(6,182,212,0.08)}
+.flow-node-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.flow-node-content{}
+.flow-node-title{font-size:14.5px;font-weight:600;color:var(--navy);margin-bottom:3px}
+.flow-node-sub{font-size:13px;color:var(--muted);line-height:1.5}
+.flow-arrow-wrap{display:flex;align-items:center;justify-content:center;height:36px}
+.flow-arrow-line{width:1.5px;height:28px;background:var(--border);position:relative}
+.flow-arrow-line::after{content:'';position:absolute;bottom:-1px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:7px solid var(--border)}
+.flow-branch{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flow-branch-item{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
+.flow-branch-item.yes{border-color:rgba(29,158,117,0.3);background:#F0FDF4}
+.flow-branch-item.no{border-color:rgba(239,68,68,0.2);background:#FFF5F5}
+.branch-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.yes .branch-label{color:#16A34A}
+.no .branch-label{color:#DC2626}
+.branch-title{font-size:13.5px;font-weight:500;color:var(--navy);margin-bottom:3px}
+.branch-sub{font-size:12px;color:var(--muted)}
+
+/* WHAT YOU DONT DO */
+.contrast-section{padding:88px 24px}
+.contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.contrast-card{border-radius:16px;padding:36px}
+.contrast-card.dont{background:#FFF5F5;border:1px solid rgba(239,68,68,0.15)}
+.contrast-card.do{background:#F0FDF9;border:1px solid rgba(29,158,117,0.2)}
+.contrast-card h3{font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.contrast-card.dont h3{color:#B91C1C}
+.contrast-card.do h3{color:#166534}
+.contrast-list{display:flex;flex-direction:column;gap:11px}
+.contrast-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.5}
+.contrast-card.dont .contrast-item{color:#7F1D1D}
+.contrast-card.do .contrast-item{color:#14532D}
+.x-mark{font-size:14px;color:#DC2626;flex-shrink:0;margin-top:1px;font-weight:700}
+.check-mark{font-size:14px;color:#16A34A;flex-shrink:0;margin-top:1px;font-weight:700}
+
+/* ONBOARDING TIMELINE */
+.onboard-section{background:var(--navy);padding:88px 24px}
+.onboard-days{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:rgba(255,255,255,0.06);border-radius:16px;overflow:hidden;margin-top:56px}
+.onboard-day{background:rgba(255,255,255,0.02);padding:28px 22px;transition:background .2s}
+.onboard-day:hover{background:rgba(6,182,212,0.06)}
+.day-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.day-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.3}
+.day-items{display:flex;flex-direction:column;gap:6px}
+.day-item{font-size:12.5px;color:rgba(255,255,255,0.45);display:flex;align-items:flex-start;gap:6px;line-height:1.4}
+.day-item::before{content:'·';color:var(--cyan);flex-shrink:0}
+
+/* CTA */
+.cta-section{background:var(--white);padding:88px 24px;text-align:center;border-top:1px solid var(--border)}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-0.8px;margin-bottom:14px}
+.cta-section h2 span{color:var(--cyan)}
+.cta-section p{font-size:16px;color:var(--muted);margin-bottom:36px;max-width:480px;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--cyan);color:var(--navy);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-primary:hover{background:#08C9E8;transform:translateY(-2px)}
+.btn-outline{border:1.5px solid var(--navy);color:var(--navy);font-size:15px;font-weight:500;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-outline:hover{background:var(--navy);color:#fff}
+
+/* FOOTER */
+footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;display:block;margin-bottom:12px}
+.footer-brand .footer-logo span{color:var(--cyan)}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:12.5px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+  .auto-grid{grid-template-columns:1fr}
+  .contrast-grid{grid-template-columns:1fr}
+  .onboard-days{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .flow-branch{grid-template-columns:1fr}
+  .tl-item{flex-direction:column;gap:16px}
+  .timeline::before{display:none}
+}
+@media(max-width:600px){
+  .onboard-days{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .section,.dark-section,.flow-section,.contrast-section,.onboard-section,.cta-section{padding:64px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <ul class="nav-links">
+      <li>
+        <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
+          <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
+          <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
+          <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
+          <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
+          <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
+        </div>
+      </li>
+      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
+      <li>
+        <a href="#">Company <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
+          <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
+          <a href="mailto:adamberrie@mapauthoritypro.com"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">adamberrie@mapauthoritypro.com</span></span></a>
+        </div>
+      </li>
+      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+    </ul>
+    <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-services.html" style="font-weight:600">Services</a>
+  <a href="mapauthoritypro-services.html#reviews" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Review automation</a>
+  <a href="mapauthoritypro-services.html#gbp" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ GBP optimization</a>
+  <a href="mapauthoritypro-services.html#ai-replies" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ AI review replies</a>
+  <a href="mapauthoritypro-services.html#lost-estimates" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Lost estimate recovery</a>
+  <a href="mapauthoritypro-services.html#reactivation" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Customer reactivation</a>
+  <a href="mapauthoritypro-services.html#referrals" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Referral campaigns</a>
+  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-pricing.html">Pricing</a>
+  <a href="mapauthoritypro-about.html">About</a>
+  <a href="mapauthoritypro-results.html">Results</a>
+  <a href="mailto:adamberrie@mapauthoritypro.com">Contact</a>
+  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="eyebrow">How it works</div>
+    <h1>Set up in a week.<br><span>Runs itself</span> forever.</h1>
+    <p>Your team does one thing — books the job. Everything after that is handled automatically. Here's exactly how the whole system works, step by step.</p>
+  </div>
+</section>
+
+<!-- OVERVIEW TIMELINE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="eyebrow">The process</div>
+    <h2 class="section-title">Three phases from zero<br>to fully automated</h2>
+    <p class="section-sub">Most clients are live within 5 days. After that the system runs indefinitely without you touching anything.</p>
+
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot">📋</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-step">Phase one — days 1–5</div>
+          <div class="tl-title">We build your entire system</div>
+          <div class="tl-text">You don't lift a finger. We connect to your Google Business Profile, optimize every detail, and build all seven automations inside our platform. The whole system is tested before going live — you receive SMS confirmation that it works.</div>
+          <div class="tl-details">
+            <div class="tl-detail">We request Google Business Profile manager access — you approve in one click</div>
+            <div class="tl-detail">We fix your categories, photos, description, Q&A, and hours</div>
+            <div class="tl-detail">We build and test all 7 workflows — review requests, replies, reactivation, referrals, lost estimates, missed calls, maintenance reminders</div>
+            <div class="tl-detail">We send you a test SMS so you see exactly what your customers will receive</div>
+            <div class="tl-detail">We set up your contractor's phone app with restricted access — contacts and calendar only</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot">📱</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-step">Phase two — day 5 handoff</div>
+          <div class="tl-title">One 15-minute screen share with your tech</div>
+          <div class="tl-text">We walk your contractor through the only two things they ever need to do — add a new customer contact and book the appointment. That's the complete training. Everything after that is automatic.</div>
+          <div class="tl-details">
+            <div class="tl-detail">Contractor downloads Lead Connector app (free, iOS and Android)</div>
+            <div class="tl-detail">We show them: search existing customer → book appointment → done</div>
+            <div class="tl-detail">New customers take 30 seconds to add — name and phone number only</div>
+            <div class="tl-detail">The moment the appointment end time passes, automation fires automatically</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-dot">⚡</div>
+        </div>
+        <div class="tl-right">
+          <div class="tl-step">Phase three — ongoing</div>
+          <div class="tl-title">Everything runs on its own</div>
+          <div class="tl-text">You run jobs. We monitor the system, handle any issues, and send you a monthly report showing review growth, rating changes, and how many quotes were recovered. The only time you hear from us is good news — or if something needs your attention.</div>
+          <div class="tl-details">
+            <div class="tl-detail">Review requests fire 90 minutes after every completed job — automatically</div>
+            <div class="tl-detail">Every Google review gets an AI-generated reply within minutes</div>
+            <div class="tl-detail">Monthly report lands in your inbox by the 5th of each month</div>
+            <div class="tl-detail">Reactivation campaigns run quarterly — no action needed from you</div>
+            <div class="tl-detail">Lost quote follow-ups fire automatically when your contractor marks a quote sent</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FLOW DIAGRAM -->
+<section class="flow-section">
+  <div class="section-inner">
+    <div class="eyebrow">The review flow</div>
+    <h2 class="section-title">What happens after<br>every single job</h2>
+    <p class="section-sub">This is the core sequence. It fires automatically every time an appointment ends in the booking system.</p>
+
+    <div class="flow-diagram">
+
+      <div class="flow-node">
+        <div class="flow-node-icon" style="background:#E0F7FA">📱</div>
+        <div class="flow-node-content">
+          <div class="flow-node-title">Contractor books appointment</div>
+          <div class="flow-node-sub">Opens Lead Connector app → searches customer → books time slot. Customer gets a confirmation SMS immediately.</div>
+        </div>
+      </div>
+      <div class="flow-arrow-wrap"><div class="flow-arrow-line"></div></div>
+
+      <div class="flow-node">
+        <div class="flow-node-icon" style="background:#FEF3C7">🔧</div>
+        <div class="flow-node-content">
+          <div class="flow-node-title">Job is completed</div>
+          <div class="flow-node-sub">Contractor finishes the work and leaves. Nothing manual needed — the system tracks the appointment end time automatically.</div>
+        </div>
+      </div>
+      <div class="flow-arrow-wrap"><div class="flow-arrow-line"></div></div>
+
+      <div class="flow-node">
+        <div class="flow-node-icon" style="background:#EDE9FE">⏱️</div>
+        <div class="flow-node-content">
+          <div class="flow-node-title">Wait 90 minutes</div>
+          <div class="flow-node-sub">1.5 hour buffer after scheduled end time covers any job overruns. Review request never fires while the contractor is still on site.</div>
+        </div>
+      </div>
+      <div class="flow-arrow-wrap"><div class="flow-arrow-line"></div></div>
+
+      <div class="flow-node" style="background:var(--navy);border-color:rgba(6,182,212,0.3)">
+        <div class="flow-node-icon" style="background:rgba(6,182,212,0.15)">💬</div>
+        <div class="flow-node-content">
+          <div class="flow-node-title" style="color:#fff">Satisfaction check SMS fires</div>
+          <div class="flow-node-sub" style="color:rgba(255,255,255,0.5)">"Hi [Name]! It's [Business] — hope everything went great today! Were you happy with our service? Reply YES or NO 😊"</div>
+        </div>
+      </div>
+      <div class="flow-arrow-wrap"><div class="flow-arrow-line"></div></div>
+
+      <div class="flow-branch">
+        <div class="flow-branch-item yes">
+          <div class="branch-label">YES reply</div>
+          <div class="branch-title">Review request sent</div>
+          <div class="branch-sub">"That's amazing! Would you mind leaving us a Google review? Takes 30 seconds: [link]" — then 2 follow-ups over 5 days if no review yet.</div>
+        </div>
+        <div class="flow-branch-item no">
+          <div class="branch-label">NO reply</div>
+          <div class="branch-title">Private feedback form sent</div>
+          <div class="branch-sub">"We're sorry to hear that — can you tell us what went wrong?" — goes to a private form. Owner gets an urgent alert. Never touches Google.</div>
+        </div>
+      </div>
+      <div class="flow-arrow-wrap"><div class="flow-arrow-line"></div></div>
+
+      <div class="flow-node">
+        <div class="flow-node-icon" style="background:#DCFCE7">⭐</div>
+        <div class="flow-node-content">
+          <div class="flow-node-title">Review detected — auto-reply posts</div>
+          <div class="flow-node-sub">The moment a Google review comes in, an AI-generated personalized reply posts within minutes. Owner gets an SMS alert. Customer tagged for the referral campaign 7 days later.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ALL 7 AUTOMATIONS -->
+<section class="dark-section">
+  <div class="section-inner">
+    <div class="eyebrow" style="color:var(--cyan)">All 7 automations</div>
+    <h2 class="section-title" style="color:#fff">Every sequence running<br>in the background</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.5)">These run 24/7 without you or your client touching anything after setup.</p>
+    <div class="auto-grid">
+      <div class="auto-item">
+        <div class="auto-icon">⭐</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> Appointment ends + 90 min</div>
+        <div class="auto-title">Review request sequence</div>
+        <div class="auto-text">Satisfaction check → YES path sends review link with 2 follow-ups over 5 days → NO path sends private feedback form and alerts owner. No reply gets one gentle request.</div>
+        <span class="auto-tag">Growth + Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">🤖</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> New Google review received</div>
+        <div class="auto-title">AI review auto-reply</div>
+        <div class="auto-text">Every review gets a personalized AI-generated reply within minutes. 4–5 star reviews get a warm thank-you. 1–3 star reviews get an empathetic recovery response that invites offline resolution.</div>
+        <span class="auto-tag">Growth + Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">🎁</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> 5-star review confirmed + 7 days</div>
+        <div class="auto-title">Referral campaign</div>
+        <div class="auto-text">Fires 7 days after a confirmed happy customer review — when satisfaction is at its peak. Asks for a referral with an optional incentive. Timing is everything: this converts where random referral blasts don't.</div>
+        <span class="auto-tag">Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">🔄</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> No booking in 6+ months</div>
+        <div class="auto-title">Customer reactivation</div>
+        <div class="auto-text">Customers who haven't booked in 6+ months get a personal outreach quarterly. Only targets confirmed happy customers — excludes anyone who gave negative feedback. 2 messages max, no spam.</div>
+        <span class="auto-tag">Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">💰</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> Estimate Status → Quote Sent</div>
+        <div class="auto-title">Lost estimate recovery</div>
+        <div class="auto-text">When a contractor sends a quote and marks it in the system, 3 automatic follow-ups go out over 7 days if the customer goes quiet. Recovers 20–30% of quotes that would otherwise be lost to silence.</div>
+        <span class="auto-tag">Growth + Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">🛠️</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> X months after last service date</div>
+        <div class="auto-title">Maintenance reminders</div>
+        <div class="auto-text">For services that repeat on a schedule — annual boiler service, 6-month HVAC check, quarterly pest control — reminders fire automatically at the right time each year, generating repeat bookings with zero effort.</div>
+        <span class="auto-tag">Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">📞</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> Incoming call not answered</div>
+        <div class="auto-title">Missed call text-back</div>
+        <div class="auto-text">Every missed call gets an instant SMS reply: "Sorry we missed you — text us here and we'll get back to you shortly." New contacts are auto-created in the system. No lead lost to a missed call ever again.</div>
+        <span class="auto-tag">Growth + Authority</span>
+      </div>
+      <div class="auto-item">
+        <div class="auto-icon">📊</div>
+        <div class="trigger-badge"><strong>Trigger:</strong> 1st of every month</div>
+        <div class="auto-title">Monthly performance report</div>
+        <div class="auto-text">A branded PDF report lands in the client's inbox every month showing review count growth, current star rating, GBP profile views, calls received, and direction requests — so they always see exactly what they're paying for.</div>
+        <span class="auto-tag">Growth + Authority</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU DON'T DO -->
+<section class="contrast-section">
+  <div class="section-inner">
+    <div class="eyebrow">The difference</div>
+    <h2 class="section-title">What you do vs<br>what we handle</h2>
+    <p class="section-sub">Most reputation tools hand you software and walk away. We handle everything after the handshake.</p>
+    <div class="contrast-grid">
+      <div class="contrast-card dont">
+        <h3>❌ What you never have to do</h3>
+        <div class="contrast-list">
+          <div class="contrast-item"><span class="x-mark">✗</span>Manually send review requests to customers</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Reply to Google reviews yourself</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Follow up on silent quotes</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Reach out to old customers to rebook</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Upload CSV files or manage spreadsheets</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Log into any complicated software dashboard</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Remember to send annual maintenance reminders</div>
+          <div class="contrast-item"><span class="x-mark">✗</span>Chase missed calls manually</div>
+        </div>
+      </div>
+      <div class="contrast-card do">
+        <h3>✅ What your team actually does</h3>
+        <div class="contrast-list">
+          <div class="contrast-item"><span class="check-mark">✓</span>Add new customer name and phone (30 seconds)</div>
+          <div class="contrast-item"><span class="check-mark">✓</span>Book the appointment in the app</div>
+          <div class="contrast-item"><span class="check-mark">✓</span>Mark a quote as sent when you send one</div>
+          <div class="contrast-item"><span class="check-mark">✓</span>Do the job well — that's what drives the reviews</div>
+          <div class="contrast-item"><span class="check-mark">✓</span>Read the monthly report we send you</div>
+          <div class="contrast-item"><span class="check-mark">✓</span>Call back customers flagged for personal follow-up</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ONBOARDING TIMELINE -->
+<section class="onboard-section">
+  <div class="section-inner">
+    <div class="eyebrow" style="color:var(--cyan)">Delivery timeline</div>
+    <h2 class="section-title" style="color:#fff">Live in 5 days.<br>Here's exactly how.</h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.5)">From signing up to your first automated review request firing — 5 days.</p>
+    <div class="onboard-days">
+      <div class="onboard-day">
+        <div class="day-label">Day 0</div>
+        <div class="day-title">Payment & onboarding</div>
+        <div class="day-items">
+          <div class="day-item">First month charged</div>
+          <div class="day-item">Intake form sent</div>
+          <div class="day-item">Agreement signed</div>
+          <div class="day-item">GBP access requested</div>
+        </div>
+      </div>
+      <div class="onboard-day">
+        <div class="day-label">Day 1</div>
+        <div class="day-title">Access & account setup</div>
+        <div class="day-items">
+          <div class="day-item">GBP connected</div>
+          <div class="day-item">Platform sub-account created</div>
+          <div class="day-item">Local phone number purchased</div>
+          <div class="day-item">Email sending configured</div>
+        </div>
+      </div>
+      <div class="onboard-day">
+        <div class="day-label">Day 2–3</div>
+        <div class="day-title">GBP optimization</div>
+        <div class="day-items">
+          <div class="day-item">Categories fixed</div>
+          <div class="day-item">Photos uploaded</div>
+          <div class="day-item">Description written</div>
+          <div class="day-item">Q&A seeded</div>
+          <div class="day-item">Verification initiated</div>
+        </div>
+      </div>
+      <div class="onboard-day">
+        <div class="day-label">Day 4</div>
+        <div class="day-title">Automations live</div>
+        <div class="day-items">
+          <div class="day-item">All 7 workflows built</div>
+          <div class="day-item">Full system tested</div>
+          <div class="day-item">Existing customers imported</div>
+          <div class="day-item">Contractor app configured</div>
+        </div>
+      </div>
+      <div class="onboard-day">
+        <div class="day-label">Day 5</div>
+        <div class="day-title">Handoff & go live</div>
+        <div class="day-items">
+          <div class="day-item">15-min contractor walkthrough</div>
+          <div class="day-item">First job booked as test</div>
+          <div class="day-item">SMS confirmed working</div>
+          <div class="day-item">You're live 🚀</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to see this<br><span>running for your business?</span></h2>
+  <p>Book a free 15-minute call. We'll pull up your Google profile live and show you exactly what we'd fix and automate.</p>
+  <div class="cta-actions">
+    <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" class="btn-primary">Book a free call →</a>
+    <a href="mapauthoritypro-pricing.html" class="btn-outline">See pricing</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Map<span>Authority</span>Pro</a>
+        <p>Done-for-you Google reputation management for US service businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="mapauthoritypro-services.html#reviews">Review automation</a>
+        <a href="mapauthoritypro-services.html#gbp">GBP optimization</a>
+        <a href="mapauthoritypro-services.html#ai-replies">AI review replies</a>
+        <a href="mapauthoritypro-services.html#lost-estimates">Lost estimate recovery</a>
+        <a href="mapauthoritypro-services.html#reactivation">Customer reactivation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mapauthoritypro-how-it-works.html" style="color:#fff"</a>
+        <a href="mapauthoritypro-pricing.html">Pricing</a>
+        <a href="mapauthoritypro-results.html">Results</a>
+        <a href="mapauthoritypro-about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get started</h4>
+        <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
+        <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
+        <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
+        <a href="mailto:adamberrie@mapauthoritypro.com">Contact us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MapAuthorityPro. All rights reserved.</span>
+      <span><a href="mapauthoritypro-privacy.html" style="color:inherit">Privacy Policy</a> · <a href="mapauthoritypro-terms.html" style="color:inherit">Terms of Service</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('mobileMenu')
+  const btn=document.querySelector('.hamburger')
+  if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){menu.classList.remove('open')}
+})
+</script>
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0B1437;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div style="font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:700px;">
+    🍪 We use cookies to improve your experience and analyse site traffic. By continuing to use this site you accept our 
+    <a href="mapauthoritypro-privacy.html" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a>.
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#06B6D4;color:#0B1437;border:none;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;">Accept</button>
+    <button onclick="declineCookies()" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:500;cursor:pointer;">Decline</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookieConsent','accepted');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookieConsent','declined');
+  document.getElementById('cookieBanner').style.display='none';
+}
+</script>
+</body>
+</html>

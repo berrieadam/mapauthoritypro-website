@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;
+  --cyan:#06B6D4;
+  --cyan-light:#E0F7FA;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --text:#0B1437;
+  --muted:#64748B;
+  --border:#E2E8F0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,20,55,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;
+  position:relative;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:800;
+  color:#fff;text-decoration:none;letter-spacing:-0.3px;
+  z-index:1001;position:relative;
+}
+.nav-logo span{color:#06B6D4}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001;}
+.nav-links li{position:relative;}
+.nav-links a{
+  color:rgba(255,255,255,0.75);
+  text-decoration:none;font-size:14px;font-weight:500;
+  padding:8px 14px;border-radius:7px;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s,background .15s;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block;}
+.nav-links li:hover .chevron{transform:rotate(180deg)}
+
+/* DROPDOWN — fixed so it never overlaps content and is always clickable */
+.dropdown{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  padding-top:8px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+  z-index:9999;
+  min-width:240px;
+}
+.nav-links li:hover .dropdown{
+  opacity:1;
+  pointer-events:auto;
+}
+.dropdown-inner{
+  background:#ffffff;
+  border:1px solid #E2E8F0;
+  border-radius:12px;
+  padding:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.dropdown a{
+  color:#0B1437 !important;
+  font-size:13.5px;font-weight:500;
+  padding:8px 12px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;
+  background:transparent !important;
+  text-decoration:none;
+  width:100%;
+}
+.dropdown a:hover{background:#F7F8FC !important;color:#0B1437 !important;}
+.dropdown-icon{
+  width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.dd-text{display:flex;flex-direction:column}
+.dd-label{font-size:13px;font-weight:500;color:#0B1437}
+.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
+
+.nav-cta{
+  background:#06B6D4;color:#0B1437;
+  font-size:13.5px;font-weight:600;
+  padding:9px 20px;border-radius:8px;
+  text-decoration:none;white-space:nowrap;
+  transition:background .15s;
+  position:relative;z-index:1001;
+}
+.nav-cta:hover{background:#08C9E8;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative;}
+.hamburger svg{width:22px;height:22px}
+.mobile-menu{
+  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:#0B1437;z-index:999;padding:24px;overflow-y:auto;
+}
+.mobile-menu.open{display:block}
+.mobile-menu a{
+  display:block;color:rgba(255,255,255,0.8);text-decoration:none;
+  font-size:16px;font-weight:500;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .mm-cta{
+  margin-top:20px;background:#06B6D4;color:#0B1437;
+  text-align:center;border-radius:10px;font-weight:600;border:none;
+}
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+}
+/* HERO */
+.page-hero{background:var(--navy);padding:140px 24px 96px;position:relative;overflow:hidden;text-align:center}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:780px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.hero-inner h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:800;color:#fff;line-height:1.06;letter-spacing:-1.2px;margin-bottom:20px}
+.hero-inner h1 span{color:var(--cyan)}
+.hero-inner p{font-size:18px;color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:44px;max-width:580px;margin-left:auto;margin-right:auto}
+
+/* SERVICE JUMP LINKS */
+.jump-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.jump-link{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:500;color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);padding:8px 16px;border-radius:99px;text-decoration:none;transition:all .2s}
+.jump-link:hover{background:rgba(6,182,212,0.1);border-color:rgba(6,182,212,0.25);color:var(--cyan)}
+
+/* STICKY SERVICE NAV */
+.sticky-nav{position:sticky;top:64px;z-index:50;background:var(--white);border-bottom:1px solid var(--border);padding:0 24px}
+.sticky-nav-inner{max-width:1160px;margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.sticky-nav-inner::-webkit-scrollbar{display:none}
+.sticky-nav-link{flex-shrink:0;font-size:13.5px;font-weight:500;color:var(--muted);text-decoration:none;padding:14px 18px;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.sticky-nav-link:hover{color:var(--navy)}
+.sticky-nav-link.active{color:var(--navy);border-bottom-color:var(--cyan)}
+
+/* SERVICE SECTIONS */
+.service-section{padding:88px 24px;scroll-margin-top:112px}
+.service-section:nth-child(even){background:var(--off)}
+.service-section.dark{background:var(--navy);padding:88px 24px}
+.service-inner{max-width:1160px;margin:0 auto}
+.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.service-grid.reverse{direction:rtl}
+.service-grid.reverse > *{direction:ltr}
+
+/* SERVICE CONTENT */
+.svc-eyebrow{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.svc-eyebrow::before{content:'';width:20px;height:1.5px}
+.svc-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,40px);font-weight:800;line-height:1.1;letter-spacing:-0.6px;margin-bottom:16px}
+.svc-sub{font-size:16px;line-height:1.75;margin-bottom:24px}
+.svc-points{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+.svc-point{display:flex;align-items:flex-start;gap:12px;font-size:14.5px;line-height:1.6}
+.svc-point-icon{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:1px}
+.svc-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 12px;border-radius:99px;margin-top:4px}
+
+/* SERVICE VISUAL */
+.svc-visual{border-radius:18px;overflow:hidden;border:1px solid var(--border)}
+.svc-visual.dark-visual{border-color:rgba(255,255,255,0.08)}
+
+/* FLOW CARD */
+.flow-card{background:var(--white);border-radius:18px;border:1px solid var(--border);overflow:hidden}
+.flow-card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.flow-card-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.flow-card-title{font-size:14px;font-weight:600;color:var(--navy)}
+.flow-card-sub{font-size:12px;color:var(--muted)}
+.flow-steps{padding:16px 20px;display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;gap:14px;align-items:flex-start;padding:10px 0;position:relative}
+.flow-step:not(:last-child)::after{content:'';position:absolute;left:15px;top:36px;bottom:-4px;width:1.5px;background:var(--border)}
+.flow-step-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;border:1.5px solid var(--border);background:var(--white);position:relative;z-index:1}
+.flow-step-content{padding-top:4px}
+.flow-step-title{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.flow-step-sub{font-size:12px;color:var(--muted);line-height:1.5}
+.flow-branch-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 4px 46px}
+.flow-branch{border-radius:8px;padding:10px 12px;border:1px solid}
+.flow-branch.yes{background:#F0FDF4;border-color:#BBF7D0}
+.flow-branch.no{background:#FFF5F5;border-color:#FECACA}
+.branch-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.yes .branch-lbl{color:#16A34A}
+.no .branch-lbl{color:#DC2626}
+.branch-txt{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+/* DARK FLOW CARD */
+.dark-flow-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:18px;overflow:hidden}
+.dark-flow-card .flow-card-head{background:rgba(255,255,255,0.03);border-bottom-color:rgba(255,255,255,0.06)}
+.dark-flow-card .flow-card-title{color:#fff}
+.dark-flow-card .flow-card-sub{color:rgba(255,255,255,0.4)}
+.dark-flow-card .flow-step::after{background:rgba(255,255,255,0.08)}
+.dark-flow-card .flow-step-dot{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.1)}
+.dark-flow-card .flow-step-title{color:#fff}
+.dark-flow-card .flow-step-sub{color:rgba(255,255,255,0.4)}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--border);border-radius:14px;overflow:hidden;margin-top:16px}
+.stat-row.dark-stat{background:rgba(255,255,255,0.06)}
+.stat-box{padding:20px;background:var(--white);text-align:center}
+.stat-box.dark-box{background:rgba(255,255,255,0.02)}
+.stat-num{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:3px}
+.dark-box .stat-num{color:var(--cyan)}
+.stat-lbl{font-size:12px;color:var(--muted);line-height:1.4}
+.dark-box .stat-lbl{color:rgba(255,255,255,0.4)}
+
+/* GBP CARD */
+.gbp-card{background:var(--white);border:1px solid var(--border);border-radius:18px;overflow:hidden}
+.gbp-header{padding:16px 20px;background:var(--navy);display:flex;align-items:center;gap:10px}
+.gbp-avatar{width:48px;height:48px;border-radius:50%;background:var(--cyan);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.gbp-biz{font-size:14px;font-weight:600;color:#fff}
+.gbp-cat{font-size:12px;color:rgba(255,255,255,0.5)}
+.gbp-stars{display:flex;align-items:center;gap:4px;padding:12px 20px;border-bottom:1px solid var(--border)}
+.gbp-stars-val{font-size:22px;font-weight:700;color:var(--navy)}
+.gbp-stars-icons{color:#F59E0B;font-size:16px;letter-spacing:1px}
+.gbp-stars-count{font-size:12px;color:var(--muted)}
+.gbp-items{padding:12px 20px}
+.gbp-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.gbp-item:last-child{border-bottom:none}
+.gbp-item-icon{font-size:16px;flex-shrink:0}
+.gbp-item-label{color:var(--muted);flex:1}
+.gbp-item-val{font-weight:500;color:var(--navy)}
+.gbp-item-tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:99px}
+.tag-good{background:#F0FDF4;color:#16A34A}
+.tag-bad{background:#FFF5F5;color:#DC2626}
+.gbp-before-after{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--border);margin-top:0}
+.ba-col{padding:14px 16px;background:var(--white)}
+.ba-head{font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.ba-before .ba-head{color:#94A3B8}
+.ba-after .ba-head{color:var(--cyan)}
+.ba-item{font-size:12px;color:var(--muted);padding:3px 0;display:flex;align-items:center;gap:6px}
+.ba-check{color:var(--cyan);font-weight:700}
+.ba-x{color:#CBD5E1}
+
+/* PACKAGES BAND */
+.packages-band{background:var(--off);padding:72px 24px;border-top:1px solid var(--border)}
+.packages-band-inner{max-width:960px;margin:0 auto;text-align:center}
+.packages-band h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3vw,38px);font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:10px}
+.packages-band p{font-size:16px;color:var(--muted);margin-bottom:40px}
+.pkg-table{display:grid;grid-template-columns:1.4fr 1fr 1fr;border:1px solid var(--border);border-radius:14px;overflow:hidden;text-align:left}
+.pkg-head{font-size:11.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:14px 18px;background:var(--off);border-bottom:1px solid var(--border);color:var(--muted)}
+.pkg-head.featured{color:var(--cyan);background:var(--navy)}
+.pkg-row{display:contents}
+.pkg-cell{padding:13px 18px;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.pkg-cell:last-child{border-bottom:none}
+.pkg-cell.featured-cell{background:rgba(11,20,55,0.02)}
+.pkg-label{font-weight:500;color:var(--navy)}
+.tick{color:var(--cyan);font-weight:700;font-size:15px}
+.dash{color:var(--border);font-size:18px}
+
+/* CTA */
+.cta-section{background:var(--navy);padding:96px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4.5vw,52px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.cta-section h2 span{color:var(--cyan)}
+.cta-section p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:36px}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-cyan{background:var(--cyan);color:var(--navy);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-cyan:hover{background:#08C9E8;transform:translateY(-2px)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75);font-size:15px;font-weight:500;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:#fff;color:#fff}
+
+/* FOOTER */
+footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;display:block;margin-bottom:12px}
+.footer-brand .footer-logo span{color:var(--cyan)}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:12.5px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+  .service-grid,.service-grid.reverse{grid-template-columns:1fr;direction:ltr}
+  .pkg-table{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .footer-top{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:1fr 1fr}
+  .flow-branch-row{grid-template-columns:1fr;margin-left:0}
+  .service-section,.dark,.packages-band,.cta-section{padding:64px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <ul class="nav-links">
+      <li>
+        <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
+          <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
+          <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
+          <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
+          <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
+          <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
+        </div>
+      </li>
+      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
+      <li>
+        <a href="#">Company <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
+          <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
+          <a href="mailto:adamberrie@mapauthoritypro.com"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">adamberrie@mapauthoritypro.com</span></span></a>
+        </div>
+      </li>
+      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+    </ul>
+    <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-services.html" style="font-weight:600">Services</a>
+  <a href="mapauthoritypro-services.html#reviews" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Review automation</a>
+  <a href="mapauthoritypro-services.html#gbp" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ GBP optimization</a>
+  <a href="mapauthoritypro-services.html#ai-replies" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ AI review replies</a>
+  <a href="mapauthoritypro-services.html#lost-estimates" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Lost estimate recovery</a>
+  <a href="mapauthoritypro-services.html#reactivation" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Customer reactivation</a>
+  <a href="mapauthoritypro-services.html#referrals" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Referral campaigns</a>
+  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-pricing.html">Pricing</a>
+  <a href="mapauthoritypro-about.html">About</a>
+  <a href="mapauthoritypro-results.html">Results</a>
+  <a href="mailto:adamberrie@mapauthoritypro.com">Contact</a>
+  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Services</div>
+    <h1>Six automations.<br>One service.<br><span>Zero effort from you.</span></h1>
+    <p>Every MapAuthorityPro client gets a fully built and tested automation system — not software to figure out yourself. Here's exactly what each service does, how it works, and what it delivers.</p>
+    <div class="jump-links">
+      <a href="#reviews" class="jump-link">⭐ Review automation</a>
+      <a href="#gbp" class="jump-link">📍 GBP optimization</a>
+      <a href="#ai-replies" class="jump-link">🤖 AI review replies</a>
+      <a href="#lost-estimates" class="jump-link">💰 Lost estimate recovery</a>
+      <a href="#reactivation" class="jump-link">🔄 Customer reactivation</a>
+      <a href="#referrals" class="jump-link">🎁 Referral campaigns</a>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY NAV -->
+<div class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="#reviews" class="sticky-nav-link">⭐ Review automation</a>
+    <a href="#gbp" class="sticky-nav-link">📍 GBP optimization</a>
+    <a href="#ai-replies" class="sticky-nav-link">🤖 AI replies</a>
+    <a href="#lost-estimates" class="sticky-nav-link">💰 Lost estimates</a>
+    <a href="#reactivation" class="sticky-nav-link">🔄 Reactivation</a>
+    <a href="#referrals" class="sticky-nav-link">🎁 Referrals</a>
+  </div>
+</div>
+
+<!-- 1. REVIEW AUTOMATION -->
+<section class="service-section" id="reviews">
+  <div class="service-inner">
+    <div class="service-grid">
+      <div>
+        <div class="svc-eyebrow" style="color:#0891B2"><span style="background:#E0F7FA;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">⭐</span>Service 1</div>
+        <h2 class="svc-title" style="color:var(--navy)">Review request automation</h2>
+        <p class="svc-sub" style="color:var(--muted)">The core of your reputation system. Every completed job automatically triggers a satisfaction check — and routes the response intelligently. Happy customers go to Google. Unhappy ones go to a private form.</p>
+        <div class="svc-points">
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#E0F7FA">⏱️</div>
+            <div><strong>Fires 90 minutes after the job ends</strong> — enough time for any overrun but while the experience is still fresh in the customer's mind. This timing is what makes the response rate 3x higher than asking days later.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#F0FDF4">🔀</div>
+            <div><strong>Satisfaction gate routes every response correctly</strong> — YES gets the Google review link. NO gets a private feedback form and an urgent owner alert. No reply gets one gentle follow-up and nothing more.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#EDE9FE">🔄</div>
+            <div><strong>3-touch follow-up for review requests</strong> — SMS on day 1, day 3, and day 6 if no review is detected. Sequence stops automatically the moment a review lands. Includes opt-out on every message.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF3C7">🛡️</div>
+            <div><strong>Fully compliant — no star gating</strong> — we never ask "rate us 1–5 stars and only click here if you rated 5." That practice violates Google's policies. Our satisfaction check is a yes/no question — completely above board.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:#E0F7FA;color:#0891B2;border:1px solid #BAE6FD">✓ Included in Growth + Authority</span>
+        <div class="stat-row" style="margin-top:20px">
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">3x</div><div class="stat-lbl">More reviews than asking manually</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">90</div><div class="stat-lbl">Minutes after job — optimal timing</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">3</div><div class="stat-lbl">Follow-up touches over 6 days</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-card">
+          <div class="flow-card-head">
+            <div class="flow-card-icon" style="background:#E0F7FA">⭐</div>
+            <div><div class="flow-card-title">Review request flow</div><div class="flow-card-sub">Fires automatically after every job</div></div>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-dot">📱</div>
+              <div class="flow-step-content"><div class="flow-step-title">Contractor books appointment</div><div class="flow-step-sub">In the Lead Connector app — takes 30 seconds</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">⏱️</div>
+              <div class="flow-step-content"><div class="flow-step-title">Wait 90 minutes after job ends</div><div class="flow-step-sub">Buffer for overruns — review never fires mid-job</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">💬</div>
+              <div class="flow-step-content"><div class="flow-step-title">Satisfaction check SMS fires</div><div class="flow-step-sub">"Were you happy with our service? Reply YES or NO 😊"</div></div>
+            </div>
+          </div>
+          <div class="flow-branch-row">
+            <div class="flow-branch yes">
+              <div class="branch-lbl">YES</div>
+              <div class="branch-txt">Review link sent → 2 follow-ups over 5 days if no review detected → stops when review lands</div>
+            </div>
+            <div class="flow-branch no">
+              <div class="branch-lbl">NO</div>
+              <div class="branch-txt">Private feedback form → owner alert → never touches Google</div>
+            </div>
+          </div>
+          <div class="flow-steps" style="padding-top:0">
+            <div class="flow-step">
+              <div class="flow-step-dot">⭐</div>
+              <div class="flow-step-content"><div class="flow-step-title">Review detected on Google</div><div class="flow-step-sub">Sequence stops. AI reply posts within minutes. Owner notified.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. GBP OPTIMIZATION -->
+<section class="service-section" id="gbp" style="background:var(--off)">
+  <div class="service-inner">
+    <div class="service-grid reverse">
+      <div>
+        <div class="svc-eyebrow" style="color:#D97706"><span style="background:#FEF3C7;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">📍</span>Service 2</div>
+        <h2 class="svc-title" style="color:var(--navy)">Google Business Profile optimization</h2>
+        <p class="svc-sub" style="color:var(--muted)">Reviews on a poorly optimized profile don't rank. We fix the profile first — so every review you earn actually moves the needle in local search. Most clients see a 2–4 position jump in local results within 30 days of optimization.</p>
+        <div class="svc-points">
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF3C7">✅</div>
+            <div><strong>Verification handled for you</strong> — unverified profiles are invisible in local search. We request and complete verification through Google's process, including video verification if required.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF3C7">📂</div>
+            <div><strong>Primary and secondary categories fixed</strong> — most businesses have wrong or missing categories. The right category is the single biggest factor in what searches your profile appears for.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF3C7">📸</div>
+            <div><strong>Photo library built and uploaded</strong> — profiles with 10+ photos get 35% more clicks. We upload team photos, work photos, before/afters, and your logo. We brief you on what to send.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF3C7">📝</div>
+            <div><strong>8 Google Posts per month</strong> — fresh posts signal an active business to Google's algorithm. We write and schedule them every month. Includes seasonal promotions, service highlights, and tips.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:#FEF3C7;color:#92400E;border:1px solid #FDE68A">✓ Included in Growth + Authority</span>
+        <div class="stat-row" style="margin-top:20px">
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">+180%</div><div class="stat-lbl">Profile views after optimization</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">5</div><div class="stat-lbl">Days to full optimization</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">8</div><div class="stat-lbl">Google Posts per month</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="gbp-card">
+          <div class="gbp-header">
+            <div class="gbp-avatar">🔧</div>
+            <div><div class="gbp-biz">Mike's Plumbing</div><div class="gbp-cat">Plumber · Columbus, Ohio</div></div>
+          </div>
+          <div class="gbp-stars">
+            <div class="gbp-stars-val">4.8</div>
+            <div class="gbp-stars-icons">★★★★★</div>
+            <div class="gbp-stars-count">61 reviews</div>
+          </div>
+          <div class="gbp-items">
+            <div class="gbp-item"><div class="gbp-item-icon">✅</div><div class="gbp-item-label">Verified</div><div class="gbp-item-tag tag-good">Yes</div></div>
+            <div class="gbp-item"><div class="gbp-item-icon">📂</div><div class="gbp-item-label">Primary category</div><div class="gbp-item-val">Plumber</div></div>
+            <div class="gbp-item"><div class="gbp-item-icon">📸</div><div class="gbp-item-label">Photos</div><div class="gbp-item-val">24 photos</div></div>
+            <div class="gbp-item"><div class="gbp-item-icon">📝</div><div class="gbp-item-label">Latest post</div><div class="gbp-item-val">3 days ago</div></div>
+            <div class="gbp-item"><div class="gbp-item-icon">💬</div><div class="gbp-item-label">Q&A answered</div><div class="gbp-item-tag tag-good">8 answers</div></div>
+          </div>
+          <div class="gbp-before-after">
+            <div class="ba-col ba-before">
+              <div class="ba-head">Before</div>
+              <div class="ba-item"><span class="ba-x">✗</span>Unverified profile</div>
+              <div class="ba-item"><span class="ba-x">✗</span>Wrong category</div>
+              <div class="ba-item"><span class="ba-x">✗</span>0 photos</div>
+              <div class="ba-item"><span class="ba-x">✗</span>No posts ever</div>
+              <div class="ba-item"><span class="ba-x">✗</span>Ranked #8</div>
+            </div>
+            <div class="ba-col ba-after">
+              <div class="ba-head">After</div>
+              <div class="ba-item"><span class="ba-check">✓</span>Verified</div>
+              <div class="ba-item"><span class="ba-check">✓</span>Correct categories</div>
+              <div class="ba-item"><span class="ba-check">✓</span>24 photos uploaded</div>
+              <div class="ba-item"><span class="ba-check">✓</span>8 posts/month</div>
+              <div class="ba-item"><span class="ba-check">✓</span>Ranked #2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. AI REVIEW REPLIES -->
+<section class="service-section dark" id="ai-replies">
+  <div class="service-inner">
+    <div class="service-grid">
+      <div>
+        <div class="svc-eyebrow" style="color:rgba(255,255,255,0.5)"><span style="background:rgba(124,58,237,0.2);width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">🤖</span>Service 3</div>
+        <h2 class="svc-title" style="color:#fff">AI review auto-replies</h2>
+        <p class="svc-sub" style="color:rgba(255,255,255,0.5)">Every Google review gets a personalized reply within minutes of posting — whether it's 5 stars or 1 star. Google rewards businesses that respond to reviews. Most service businesses respond to fewer than 30% — usually only the negative ones.</p>
+        <div class="svc-points">
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">⚡</div>
+            <div><strong style="color:#fff">Posts within minutes</strong> — not days later. Google's algorithm notes response time. Responding within hours signals an active, engaged business and positively affects local ranking.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">🎭</div>
+            <div><strong style="color:#fff">Tone matches the star rating</strong> — 4–5 star reviews get a warm, genuine thank-you that reflects the specific service mentioned. 1–3 star reviews get an empathetic, professional recovery response inviting offline resolution.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">🔗</div>
+            <div><strong style="color:#fff">Connected directly to your Google Business Profile</strong> — we connect GHL to your GBP and replies post through your account. They appear as coming from the business owner, not a third party.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">📲</div>
+            <div><strong style="color:#fff">Owner alert on every review</strong> — you get an SMS the moment a review comes in so you always know what's being said about your business, even though you don't need to do anything about it.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:rgba(6,182,212,0.1);color:var(--cyan);border:1px solid rgba(6,182,212,0.2)">✓ Included in Growth + Authority</span>
+        <div class="stat-row dark-stat" style="margin-top:20px">
+          <div class="stat-box dark-box"><div class="stat-num">100%</div><div class="stat-lbl">Review response rate</div></div>
+          <div class="stat-box dark-box"><div class="stat-num">&lt;5</div><div class="stat-lbl">Minutes to reply after review posts</div></div>
+          <div class="stat-box dark-box"><div class="stat-num">$0</div><div class="stat-lbl">Extra cost — included in package</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="dark-flow-card">
+          <div class="flow-card-head">
+            <div class="flow-card-icon" style="background:rgba(124,58,237,0.15)">🤖</div>
+            <div><div class="flow-card-title">AI reply examples</div><div class="flow-card-sub">Posted within minutes of the review</div></div>
+          </div>
+          <div style="padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span style="color:#F59E0B;font-size:13px">★★★★★</span>
+                <span style="font-size:11.5px;color:rgba(255,255,255,0.4)">5-star review from Sarah M.</span>
+              </div>
+              <div style="font-size:12.5px;color:rgba(255,255,255,0.35);margin-bottom:10px;font-style:italic">"Mike showed up on time and fixed our burst pipe in under an hour. Incredibly professional."</div>
+              <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--cyan);margin-bottom:6px">Owner reply · 3 min later</div>
+              <div style="font-size:12.5px;color:rgba(255,255,255,0.65);line-height:1.6">Thank you so much Sarah! Burst pipes are always stressful and we're really glad we could get there quickly and sort it out for you. We appreciate you taking the time to leave a review — it means a lot to our team. Hope to help you again if you ever need us!</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span style="color:#F59E0B;font-size:13px">★★</span><span style="color:rgba(255,255,255,0.15);font-size:13px">★★★</span>
+                <span style="font-size:11.5px;color:rgba(255,255,255,0.4)">2-star review from James T.</span>
+              </div>
+              <div style="font-size:12.5px;color:rgba(255,255,255,0.35);margin-bottom:10px;font-style:italic">"Showed up late and left a mess behind. Not happy."</div>
+              <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--cyan);margin-bottom:6px">Owner reply · 4 min later</div>
+              <div style="font-size:12.5px;color:rgba(255,255,255,0.65);line-height:1.6">Hi James, we're really sorry to hear this — that's not the experience we want for any customer. We'd like to make this right. Please reach out to us directly at [phone] and we'll address both issues personally. Thank you for letting us know.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. LOST ESTIMATE RECOVERY -->
+<section class="service-section" id="lost-estimates">
+  <div class="service-inner">
+    <div class="service-grid reverse">
+      <div>
+        <div class="svc-eyebrow" style="color:#16A34A"><span style="background:#DCFCE7;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">💰</span>Service 4</div>
+        <h2 class="svc-title" style="color:var(--navy)">Lost estimate recovery</h2>
+        <p class="svc-sub" style="color:var(--muted)">You send a quote. The customer goes quiet. You move on and assume they went elsewhere. Most of the time that's wrong — they just got busy and forgot. Three automatic follow-ups recover an average of 28% of silent quotes. No other reputation platform offers this.</p>
+        <div class="svc-points">
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#DCFCE7">🎯</div>
+            <div><strong>Triggers when contractor marks quote as sent</strong> — one field update in the app. The sequence fires automatically from that moment. No CSV uploads, no manually setting reminders.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#DCFCE7">📅</div>
+            <div><strong>3 touches over 7 days</strong> — Day 2 is a soft check-in. Day 5 asks if they have any questions. Day 7 is a final gentle close. The sequence stops the instant the customer replies or accepts.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#DCFCE7">💬</div>
+            <div><strong>SMS feels personal, not automated</strong> — each message is written to sound like the owner following up personally. First name, business name, reference to the quote. Customers reply to these because they don't feel like spam.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#DCFCE7">🔒</div>
+            <div><strong>Unique to MapAuthorityPro</strong> — Podium, Birdeye, and NiceJob do not offer lost estimate follow-up. This is a feature we built because contractors told us it was their biggest revenue leak.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:#DCFCE7;color:#166534;border:1px solid #BBF7D0">✓ Included in Growth + Authority</span>
+        <div class="stat-row" style="margin-top:20px">
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">28%</div><div class="stat-lbl">Of silent quotes recovered</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">3</div><div class="stat-lbl">Follow-up messages over 7 days</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">$350</div><div class="stat-lbl">Average recovered job value</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-card">
+          <div class="flow-card-head">
+            <div class="flow-card-icon" style="background:#DCFCE7">💰</div>
+            <div><div class="flow-card-title">Lost estimate sequence</div><div class="flow-card-sub">Fires when quote is marked as sent</div></div>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-dot">📋</div>
+              <div class="flow-step-content"><div class="flow-step-title">Quote sent → field updated</div><div class="flow-step-sub">Contractor marks Estimate Status → "Quote Sent" in app. Sequence starts.</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">2d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Day 2 — soft check-in</div><div class="flow-step-sub">"Hi [Name]! Just checking in on the estimate we sent — any questions I can answer or anything to adjust? 😊"</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">5d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Day 5 — second touch</div><div class="flow-step-sub">"Hey [Name], still happy to help if you'd like to move forward or have any questions about the quote."</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">7d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Day 7 — final message</div><div class="flow-step-sub">"Last message from us — if you ever want to revisit this just reply here or call us. No pressure! 👋"</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">✓</div>
+              <div class="flow-step-content"><div class="flow-step-title">Customer replies → sequence stops</div><div class="flow-step-sub">Owner gets alert. Status updates to Accepted or Following Up. No further messages.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. REACTIVATION -->
+<section class="service-section dark" id="reactivation">
+  <div class="service-inner">
+    <div class="service-grid">
+      <div>
+        <div class="svc-eyebrow" style="color:rgba(255,255,255,0.5)"><span style="background:rgba(239,68,68,0.15);width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">🔄</span>Service 5</div>
+        <h2 class="svc-title" style="color:#fff">Old customer reactivation</h2>
+        <p class="svc-sub" style="color:rgba(255,255,255,0.5)">Customers who haven't booked in 6+ months get a personal outreach every quarter. They already know and trust you — they just forgot you exist. A 12% conversion rate on reactivation campaigns means 6 extra jobs per quarter from 50 past customers.</p>
+        <div class="svc-points">
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">🎯</div>
+            <div><strong style="color:#fff">Only targets confirmed happy customers</strong> — we filter by satisfaction response and review status. Anyone who gave negative feedback is excluded. You're reaching people who already liked your work.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">📅</div>
+            <div><strong style="color:#fff">Runs quarterly with no action needed</strong> — the trigger is date-based. Every quarter, the system identifies customers inactive for 6+ months and sends the outreach automatically.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">🛠️</div>
+            <div><strong style="color:#fff">Maintenance reminders run alongside</strong> — for services on a fixed schedule (annual boiler check, 6-month HVAC service, quarterly pest control), reminders fire automatically at the right time every year.</div>
+          </div>
+          <div class="svc-point" style="color:rgba(255,255,255,0.7)">
+            <div class="svc-point-icon" style="background:rgba(255,255,255,0.06)">📈</div>
+            <div><strong style="color:#fff">Highest ROI automation per dollar</strong> — the cost of acquiring a new customer is 5x higher than rebooking an existing one. Reactivation generates revenue from people who already trust you, with zero ad spend.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:rgba(6,182,212,0.1);color:var(--cyan);border:1px solid rgba(6,182,212,0.2)">✓ Authority package only</span>
+        <div class="stat-row dark-stat" style="margin-top:20px">
+          <div class="stat-box dark-box"><div class="stat-num">12%</div><div class="stat-lbl">Conversion rate from campaign</div></div>
+          <div class="stat-box dark-box"><div class="stat-num">5x</div><div class="stat-lbl">Cheaper than new customer acquisition</div></div>
+          <div class="stat-box dark-box"><div class="stat-num">0</div><div class="stat-lbl">Manual effort after setup</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="dark-flow-card">
+          <div class="flow-card-head">
+            <div class="flow-card-icon" style="background:rgba(239,68,68,0.15)">🔄</div>
+            <div><div class="flow-card-title">Reactivation sequence</div><div class="flow-card-sub">Runs quarterly for lapsed customers</div></div>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-dot">🔍</div>
+              <div class="flow-step-content"><div class="flow-step-title">System identifies lapsed customers</div><div class="flow-step-sub">Last Service Date &gt; 6 months ago + Satisfaction = Happy + no active sequence running</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">💬</div>
+              <div class="flow-step-content"><div class="flow-step-title">Reactivation SMS fires</div><div class="flow-step-sub">"Hi [Name]! It's [Business] 👋 It's been a while — hope everything's going well. We're currently booking [service] jobs for the coming weeks. Want us to come by? Just reply YES and we'll get you scheduled."</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">5d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Wait 5 days — if no reply</div><div class="flow-step-sub">One gentle follow-up: "Just a quick follow-up — happy to answer any questions or sort out a time that works for you 😊"</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">✓</div>
+              <div class="flow-step-content"><div class="flow-step-title">Reply received → owner alert</div><div class="flow-step-sub">Internal SMS sent to owner. Contact tagged for booking follow-up. Sequence ends.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. REFERRALS -->
+<section class="service-section" id="referrals">
+  <div class="service-inner">
+    <div class="service-grid reverse">
+      <div>
+        <div class="svc-eyebrow" style="color:#CA8A04"><span style="background:#FEF9C3;width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px">🎁</span>Service 6</div>
+        <h2 class="svc-title" style="color:var(--navy)">Referral campaign automation</h2>
+        <p class="svc-sub" style="color:var(--muted)">7 days after a confirmed 5-star review, a referral ask goes out automatically. This timing is deliberate — it's when the customer's satisfaction is at its peak and they're most likely to recommend you. An 8% referral rate means 1 referral for every 12 happy customers contacted.</p>
+        <div class="svc-points">
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF9C3">⏰</div>
+            <div><strong>Timing is the secret</strong> — asking for a referral immediately after a job feels transactional. Asking 7 days after they've voluntarily left a 5-star review — when they're clearly still happy — feels natural. That's why it converts.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF9C3">🎯</div>
+            <div><strong>Only targets confirmed promoters</strong> — the referral ask only fires after a 5-star review is confirmed on Google. Customers who replied NO to the satisfaction check never receive a referral request.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF9C3">💬</div>
+            <div><strong>Owner notified immediately on referral reply</strong> — when a customer replies with a friend's name and number, you get an instant SMS alert so you can follow up while the referral is still warm.</div>
+          </div>
+          <div class="svc-point">
+            <div class="svc-point-icon" style="background:#FEF9C3">🔁</div>
+            <div><strong>Completely automated, no manual tracking</strong> — no spreadsheet of who to ask, no reminders to follow up. The campaign runs itself every time a new 5-star review comes in.</div>
+          </div>
+        </div>
+        <span class="svc-badge" style="background:#FEF9C3;color:#92400E;border:1px solid #FDE68A">✓ Authority package only</span>
+        <div class="stat-row" style="margin-top:20px">
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">8%</div><div class="stat-lbl">Referral conversion rate</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">7</div><div class="stat-lbl">Days after review — optimal ask timing</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--cyan)">$0</div><div class="stat-lbl">Cost per referral generated</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-card">
+          <div class="flow-card-head">
+            <div class="flow-card-icon" style="background:#FEF9C3">🎁</div>
+            <div><div class="flow-card-title">Referral campaign flow</div><div class="flow-card-sub">Fires 7 days after a 5-star review</div></div>
+          </div>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <div class="flow-step-dot">⭐</div>
+              <div class="flow-step-content"><div class="flow-step-title">5-star review confirmed on Google</div><div class="flow-step-sub">AI reply posts. Customer tagged as happy_customer. Referral timer starts.</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">7d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Wait 7 days</div><div class="flow-step-sub">Peak satisfaction window — customer is still happy, experience is still fresh.</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">💬</div>
+              <div class="flow-step-content"><div class="flow-step-title">Referral SMS fires</div><div class="flow-step-sub">"Hey [Name]! It's [Business] 👋 Thank you again for the kind Google review! If you know anyone who could use our help, we'd love to look after them. Just reply with their name and number and we'll take it from there 😊"</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">5d</div>
+              <div class="flow-step-content"><div class="flow-step-title">Wait 5 days</div><div class="flow-step-sub">If they replied with a referral — instant owner alert. If not, sequence ends. No second ask.</div></div>
+            </div>
+            <div class="flow-step">
+              <div class="flow-step-dot">✓</div>
+              <div class="flow-step-content"><div class="flow-step-title">Referral reply → owner alert</div><div class="flow-step-sub">"📣 Referral from [Name] — they mentioned [friend name/number]. Follow up ASAP!"</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES BAND -->
+<div class="packages-band">
+  <div class="packages-band-inner">
+    <h2>Which services are in which package</h2>
+    <p>All six automations are fully built and managed by us. Growth covers the core reputation system. Authority adds the advanced growth layer.</p>
+    <div class="pkg-table">
+      <div class="pkg-head">Service</div>
+      <div class="pkg-head">Growth — $399/mo</div>
+      <div class="pkg-head featured">Authority — $699/mo</div>
+
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">⭐ Review request automation</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">📍 GBP optimization + posts</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">🤖 AI review auto-replies</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">💰 Lost estimate recovery</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">🔄 Customer reactivation</span></div>
+        <div class="pkg-cell"><span class="dash">—</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">🎁 Referral campaigns</span></div>
+        <div class="pkg-cell"><span class="dash">—</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">📞 Missed call text-back</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+      <div class="pkg-row">
+        <div class="pkg-cell"><span class="pkg-label">📊 Monthly performance report</span></div>
+        <div class="pkg-cell"><span class="tick">✓</span></div>
+        <div class="pkg-cell featured-cell"><span class="tick">✓</span></div>
+      </div>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="mapauthoritypro-pricing.html" style="background:var(--navy);color:#fff;font-size:14.5px;font-weight:600;padding:13px 26px;border-radius:10px;text-decoration:none;transition:all .2s">See full pricing →</a>
+      <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" style="border:1.5px solid var(--navy);color:var(--navy);font-size:14.5px;font-weight:500;padding:13px 26px;border-radius:10px;text-decoration:none;transition:all .2s">Book a free call</a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <h2>All six automations.<br><span>Running for you.</span></h2>
+    <p>Book a free 15-minute call. We'll look at your Google profile live and show you exactly what each automation would do for your specific business.</p>
+    <div class="cta-actions">
+      <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" class="btn-cyan">Book a free call →</a>
+      <a href="mapauthoritypro-pricing.html" class="btn-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Map<span>Authority</span>Pro</a>
+        <p>Done-for-you Google reputation management for US service businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#reviews">Review automation</a>
+        <a href="#gbp">GBP optimization</a>
+        <a href="#ai-replies">AI review replies</a>
+        <a href="#lost-estimates">Lost estimate recovery</a>
+        <a href="#reactivation">Customer reactivation</a>
+        <a href="#referrals">Referral campaigns</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mapauthoritypro-how-it-works.html">How it works</a>
+        <a href="mapauthoritypro-pricing.html">Pricing</a>
+        <a href="mapauthoritypro-results.html">Results</a>
+        <a href="mapauthoritypro-about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get started</h4>
+        <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
+        <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
+        <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
+        <a href="mailto:adamberrie@mapauthoritypro.com">Contact us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MapAuthorityPro. All rights reserved.</span>
+      <span><a href="mapauthoritypro-privacy.html" style="color:inherit">Privacy Policy</a> · <a href="mapauthoritypro-terms.html" style="color:inherit">Terms of Service</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('mobileMenu')
+  const btn=document.querySelector('.hamburger')
+  if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){menu.classList.remove('open')}
+})
+
+// Sticky nav active state on scroll
+const sections=['reviews','gbp','ai-replies','lost-estimates','reactivation','referrals']
+const links=document.querySelectorAll('.sticky-nav-link')
+window.addEventListener('scroll',()=>{
+  let current=''
+  sections.forEach(id=>{
+    const el=document.getElementById(id)
+    if(el&&window.scrollY>=el.offsetTop-140) current=id
+  })
+  links.forEach(l=>{
+    l.classList.toggle('active',l.getAttribute('href')==='#'+current)
+  })
+})
+</script>
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0B1437;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div style="font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:700px;">
+    🍪 We use cookies to improve your experience and analyse site traffic. By continuing to use this site you accept our 
+    <a href="mapauthoritypro-privacy.html" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a>.
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#06B6D4;color:#0B1437;border:none;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;">Accept</button>
+    <button onclick="declineCookies()" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:500;cursor:pointer;">Decline</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookieConsent','accepted');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookieConsent','declined');
+  document.getElementById('cookieBanner').style.display='none';
+}
+</script>
+</body>
+</html>

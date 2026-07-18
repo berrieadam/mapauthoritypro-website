@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Results — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;
+  --cyan:#06B6D4;
+  --cyan-light:#E0F7FA;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --text:#0B1437;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --green:#16A34A;
+  --green-light:#F0FDF4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,20,55,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;
+  position:relative;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:800;
+  color:#fff;text-decoration:none;letter-spacing:-0.3px;
+  z-index:1001;position:relative;
+}
+.nav-logo span{color:#06B6D4}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001;}
+.nav-links li{position:relative;}
+.nav-links a{
+  color:rgba(255,255,255,0.75);
+  text-decoration:none;font-size:14px;font-weight:500;
+  padding:8px 14px;border-radius:7px;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s,background .15s;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block;}
+.nav-links li:hover .chevron{transform:rotate(180deg)}
+
+/* DROPDOWN — fixed so it never overlaps content and is always clickable */
+.dropdown{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  padding-top:8px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+  z-index:9999;
+  min-width:240px;
+}
+.nav-links li:hover .dropdown{
+  opacity:1;
+  pointer-events:auto;
+}
+.dropdown-inner{
+  background:#ffffff;
+  border:1px solid #E2E8F0;
+  border-radius:12px;
+  padding:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.dropdown a{
+  color:#0B1437 !important;
+  font-size:13.5px;font-weight:500;
+  padding:8px 12px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;
+  background:transparent !important;
+  text-decoration:none;
+  width:100%;
+}
+.dropdown a:hover{background:#F7F8FC !important;color:#0B1437 !important;}
+.dropdown-icon{
+  width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.dd-text{display:flex;flex-direction:column}
+.dd-label{font-size:13px;font-weight:500;color:#0B1437}
+.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
+
+.nav-cta{
+  background:#06B6D4;color:#0B1437;
+  font-size:13.5px;font-weight:600;
+  padding:9px 20px;border-radius:8px;
+  text-decoration:none;white-space:nowrap;
+  transition:background .15s;
+  position:relative;z-index:1001;
+}
+.nav-cta:hover{background:#08C9E8;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative;}
+.hamburger svg{width:22px;height:22px}
+.mobile-menu{
+  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:#0B1437;z-index:999;padding:24px;overflow-y:auto;
+}
+.mobile-menu.open{display:block}
+.mobile-menu a{
+  display:block;color:rgba(255,255,255,0.8);text-decoration:none;
+  font-size:16px;font-weight:500;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .mm-cta{
+  margin-top:20px;background:#06B6D4;color:#0B1437;
+  text-align:center;border-radius:10px;font-weight:600;border:none;
+}
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+}
+/* PAGE HERO */
+.page-hero{background:var(--navy);padding:140px 24px 96px;position:relative;overflow:hidden;text-align:center}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.page-hero-inner{max-width:720px;margin:0 auto;position:relative;z-index:1}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.page-hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,62px);font-weight:800;color:#fff;line-height:1.08;letter-spacing:-1px;margin-bottom:16px}
+.page-hero h1 span{color:var(--cyan)}
+.page-hero p{font-size:17px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:40px}
+.hero-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:rgba(255,255,255,0.06);border-radius:14px;overflow:hidden;max-width:760px;margin:0 auto}
+.hero-stat{padding:20px;background:rgba(255,255,255,0.02);text-align:center}
+.hero-stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:var(--cyan);line-height:1;margin-bottom:4px}
+.hero-stat-label{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.4}
+
+/* CASE STUDIES */
+.cases-section{padding:88px 24px;background:var(--off)}
+.cases-inner{max-width:1160px;margin:0 auto}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-0.6px;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:48px;max-width:520px}
+.case-card{background:var(--white);border:1px solid var(--border);border-radius:18px;overflow:hidden;margin-bottom:24px;transition:all .2s}
+.case-card:hover{box-shadow:0 12px 40px rgba(0,0,0,0.07);transform:translateY(-2px)}
+.case-inner{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.case-left{padding:40px}
+.case-niche{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);background:var(--cyan-light);padding:5px 12px;border-radius:99px;margin-bottom:16px}
+.case-name{font-family:'Playfair Display',serif;font-size:26px;font-weight:800;color:var(--navy);margin-bottom:4px;letter-spacing:-0.3px}
+.case-location{font-size:14px;color:var(--muted);margin-bottom:20px}
+.case-problem-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.case-problem{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:20px}
+.case-solution-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+.case-solution{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:24px}
+.case-quote{background:var(--off);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:16px 18px;font-size:15px;font-style:italic;color:var(--navy);line-height:1.65;margin-bottom:16px}
+.case-author{font-size:13px;color:var(--muted);font-style:normal;font-weight:500}
+.case-right{background:var(--navy);padding:40px;display:flex;flex-direction:column;justify-content:center}
+.case-results-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:24px}
+.result-metrics{display:flex;flex-direction:column;gap:20px}
+.result-metric{display:flex;align-items:center;gap:16px}
+.metric-bar-wrap{flex:1}
+.metric-label{font-size:12.5px;color:rgba(255,255,255,0.5);margin-bottom:6px;display:flex;justify-content:space-between}
+.metric-bar{height:6px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden}
+.metric-fill{height:100%;background:var(--cyan);border-radius:99px;transition:width 1s ease}
+.metric-change{font-size:13px;font-weight:600;color:var(--cyan);white-space:nowrap;min-width:48px;text-align:right}
+.before-after{display:flex;flex-direction:column;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08)}
+.ba-row{display:flex;align-items:center;gap:12px;font-size:13.5px}
+.ba-label{color:rgba(255,255,255,0.4);min-width:80px;font-size:12px}
+.ba-before{color:rgba(255,255,255,0.4);text-decoration:line-through}
+.ba-arrow{color:var(--cyan);font-size:16px}
+.ba-after{color:#fff;font-weight:600}
+.case-package{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--cyan);background:rgba(6,182,212,0.1);border:1px solid rgba(6,182,212,0.2);padding:5px 12px;border-radius:99px;margin-top:24px}
+.timeline-tag{font-size:11.5px;color:rgba(255,255,255,0.4);margin-top:8px;display:block}
+
+/* METRICS OVERVIEW */
+.metrics-section{background:var(--navy);padding:88px 24px}
+.metrics-inner{max-width:1160px;margin:0 auto}
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.metric-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:32px;text-align:center;transition:all .2s}
+.metric-card:hover{background:rgba(6,182,212,0.06);border-color:rgba(6,182,212,0.2)}
+.metric-big{font-family:'Playfair Display',serif;font-size:56px;font-weight:800;color:var(--cyan);line-height:1;margin-bottom:8px}
+.metric-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
+.metric-desc{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65}
+
+/* AUTOMATION RESULTS */
+.auto-results-section{padding:88px 24px}
+.auto-results-inner{max-width:1160px;margin:0 auto}
+.auto-results-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.ar-card{border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .2s}
+.ar-card:hover{border-color:var(--cyan);box-shadow:0 8px 30px rgba(6,182,212,0.08);transform:translateY(-3px)}
+.ar-icon{font-size:26px;margin-bottom:12px}
+.ar-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px}
+.ar-num span{color:var(--cyan)}
+.ar-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.ar-desc{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+/* TESTIMONIALS WALL */
+.testi-section{background:var(--off);padding:88px 24px}
+.testi-inner{max-width:1160px;margin:0 auto}
+.testi-masonry{columns:3;gap:20px;margin-top:48px}
+.testi-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;break-inside:avoid}
+.testi-stars{color:#F59E0B;font-size:13px;letter-spacing:2px;margin-bottom:12px}
+.testi-text{font-size:15px;color:var(--navy);line-height:1.7;margin-bottom:16px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.testi-name{font-size:13.5px;font-weight:600;color:var(--navy)}
+.testi-biz{font-size:12px;color:var(--muted)}
+.testi-result{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:var(--green);background:var(--green-light);padding:3px 9px;border-radius:99px;margin-top:10px}
+
+/* CTA */
+.cta-section{background:var(--navy);padding:88px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,50px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.cta-section h2 span{color:var(--cyan)}
+.cta-section p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:36px}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--navy);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-white:hover{background:var(--cyan);transform:translateY(-2px)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75);font-size:15px;font-weight:500;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:#fff;color:#fff}
+
+/* FOOTER */
+footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;display:block;margin-bottom:12px}
+.footer-brand .footer-logo span{color:var(--cyan)}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:12.5px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+  .case-inner{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .auto-results-grid{grid-template-columns:1fr 1fr}
+  .testi-masonry{columns:2}
+  .hero-stats-row{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .metrics-grid{grid-template-columns:1fr}
+  .auto-results-grid{grid-template-columns:1fr}
+  .testi-masonry{columns:1}
+  .hero-stats-row{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+  .page-hero,.cases-section,.metrics-section,.auto-results-section,.testi-section,.cta-section{padding:64px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <ul class="nav-links">
+      <li>
+        <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
+          <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
+          <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
+          <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
+          <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
+          <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
+        </div>
+      </li>
+      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
+      <li>
+        <a href="#">Company <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
+          <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
+          <a href="mailto:adamberrie@mapauthoritypro.com"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">adamberrie@mapauthoritypro.com</span></span></a>
+        </div>
+      </li>
+      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+    </ul>
+    <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-services.html" style="font-weight:600">Services</a>
+  <a href="mapauthoritypro-services.html#reviews" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Review automation</a>
+  <a href="mapauthoritypro-services.html#gbp" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ GBP optimization</a>
+  <a href="mapauthoritypro-services.html#ai-replies" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ AI review replies</a>
+  <a href="mapauthoritypro-services.html#lost-estimates" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Lost estimate recovery</a>
+  <a href="mapauthoritypro-services.html#reactivation" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Customer reactivation</a>
+  <a href="mapauthoritypro-services.html#referrals" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Referral campaigns</a>
+  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-pricing.html">Pricing</a>
+  <a href="mapauthoritypro-about.html">About</a>
+  <a href="mapauthoritypro-results.html">Results</a>
+  <a href="mailto:adamberrie@mapauthoritypro.com">Contact</a>
+  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="page-hero-inner">
+    <div class="eyebrow">Results</div>
+    <h1>What happens when<br>the system <span>runs for you</span></h1>
+    <p>Real numbers from real service businesses. These are placeholder case studies — replace with your actual client results as they come in.</p>
+    <div class="hero-stats-row">
+      <div class="hero-stat"><div class="hero-stat-num">3x</div><div class="hero-stat-label">Avg review growth in 90 days</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">4.8★</div><div class="hero-stat-label">Avg rating after 6 months</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">28%</div><div class="hero-stat-label">Lost quotes recovered</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">12%</div><div class="hero-stat-label">Old customers reactivated</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cases-section">
+  <div class="cases-inner">
+    <div class="eyebrow">Case studies</div>
+    <h2 class="section-title">Three businesses.<br>Three completely different wins.</h2>
+    <p class="section-sub">Same system, different results depending on where the biggest gaps were. Every business gets the same 7 automations — but each one finds its own highest-value outcome.</p>
+
+    <!-- CASE 1 -->
+    <div class="case-card">
+      <div class="case-inner">
+        <div class="case-left">
+          <span class="case-niche">🔧 Plumbing</span>
+          <div class="case-name">Mike's Plumbing</div>
+          <div class="case-location">Columbus, Ohio · Growth package · Month 3</div>
+          <div class="case-problem-label">The problem</div>
+          <div class="case-problem">Mike had been in business for 11 years and had 14 Google reviews — all from satisfied customers who happened to leave one on their own. His GBP was unverified, showed no photos, and his competitor two streets over had 94 reviews. Mike was losing first-call opportunities every single week and didn't know why his phone had slowed down.</div>
+          <div class="case-solution-label">What we did</div>
+          <div class="case-solution">Verified and fully optimized his GBP within 3 days. Built the review sequence — 90 minutes after every job, his customers received a satisfaction check, and happy customers got the Google review link. Within 60 days his review count tripled and he was showing up first for "plumber near me" in his zip code.</div>
+          <div class="case-quote">"I went from 14 reviews to 61 in three months. I didn't do a single thing — my tech just books jobs in the app and the reviews come in automatically. My phone is ringing like it was 5 years ago."<div class="case-author">— Mike Johnson, owner</div></div>
+        </div>
+        <div class="case-right">
+          <div class="case-results-label">Results after 90 days</div>
+          <div class="result-metrics">
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Google reviews</span><span>14 → 61</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:85%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">+336% increase</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Star rating</span><span>4.1★ → 4.8★</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:70%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Above local competitor average</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>GBP profile views</span><span>+180%</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:75%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Monthly searches showing his profile</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Inbound calls from Google</span><span>+40%</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:60%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Compared to 3 months prior</div>
+            </div>
+          </div>
+          <div class="before-after">
+            <div class="ba-row"><span class="ba-label">Reviews</span><span class="ba-before">14</span><span class="ba-arrow">→</span><span class="ba-after">61</span></div>
+            <div class="ba-row"><span class="ba-label">Rating</span><span class="ba-before">4.1★</span><span class="ba-arrow">→</span><span class="ba-after">4.8★</span></div>
+            <div class="ba-row"><span class="ba-label">GBP verified</span><span class="ba-before">No</span><span class="ba-arrow">→</span><span class="ba-after">Yes</span></div>
+            <div class="ba-row"><span class="ba-label">Rank for "plumber near me"</span><span class="ba-before">#8</span><span class="ba-arrow">→</span><span class="ba-after">#2</span></div>
+          </div>
+          <span class="case-package">Growth — $399/mo</span>
+          <span class="timeline-tag">Results measured at 90 days</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 2 -->
+    <div class="case-card">
+      <div class="case-inner">
+        <div class="case-left">
+          <span class="case-niche" style="background:#FEF3C7;color:#92400E">❄️ HVAC</span>
+          <div class="case-name">Cool Air HVAC</div>
+          <div class="case-location">Houston, Texas · Authority package · Month 2</div>
+          <div class="case-problem-label">The problem</div>
+          <div class="case-problem">Carlos ran a 3-tech HVAC operation and sent roughly 15–20 quotes a week. He estimated he was closing about 55% of them — the rest just went silent. He had no system for following up on quiet quotes and assumed the customers had gone elsewhere. He was also losing repeat customers who hadn't heard from him in a year.</div>
+          <div class="case-solution-label">What we did</div>
+          <div class="case-solution">Built the lost estimate recovery sequence — when a tech marks a quote as sent, three follow-up SMS fire automatically over 7 days. Also activated the maintenance reminder sequence, targeting customers who'd had their annual HVAC check 11 months ago. First quarter reactivation campaign recovered 6 past customers.</div>
+          <div class="case-quote">"The lost estimate recovery alone paid for the service. We recovered four jobs in the first month that I would have just written off. And the maintenance reminders are booking out my quieter weeks automatically."<div class="case-author">— Carlos Alvarez, owner</div></div>
+        </div>
+        <div class="case-right">
+          <div class="case-results-label">Results after 60 days</div>
+          <div class="result-metrics">
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Quote close rate</span><span>55% → 71%</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:71%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">From lost estimate recovery</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Lost quotes recovered (mo 1)</span><span>4 jobs</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:55%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Avg $380 per job = $1,520 recovered</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Reactivation bookings (Q1)</span><span>6 jobs</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:65%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">From 50 past customers contacted</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Google reviews</span><span>22 → 49</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:60%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">+122% in 60 days</div>
+            </div>
+          </div>
+          <div class="before-after">
+            <div class="ba-row"><span class="ba-label">Close rate</span><span class="ba-before">55%</span><span class="ba-arrow">→</span><span class="ba-after">71%</span></div>
+            <div class="ba-row"><span class="ba-label">Revenue recovered mo 1</span><span class="ba-before">$0</span><span class="ba-arrow">→</span><span class="ba-after">$1,520</span></div>
+            <div class="ba-row"><span class="ba-label">Reviews</span><span class="ba-before">22</span><span class="ba-arrow">→</span><span class="ba-after">49</span></div>
+            <div class="ba-row"><span class="ba-label">Reactivation bookings</span><span class="ba-before">0</span><span class="ba-arrow">→</span><span class="ba-after">6/quarter</span></div>
+          </div>
+          <span class="case-package">Authority — $699/mo</span>
+          <span class="timeline-tag">Results measured at 60 days</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 3 -->
+    <div class="case-card">
+      <div class="case-inner">
+        <div class="case-left">
+          <span class="case-niche" style="background:#EDE9FE;color:#5B21B6">🏠 Roofing</span>
+          <div class="case-name">TopRoof Roofing</div>
+          <div class="case-location">Tampa, Florida · Growth package · Month 4</div>
+          <div class="case-problem-label">The problem</div>
+          <div class="case-problem">Sarah's roofing company had a 3.8-star Google rating from 28 reviews — two of which were fake 1-star reviews from a competitor. Her conversion rate from Google profile views to calls was below industry average and she was spending $800/mo on Google Ads to compensate for her weak organic presence. She'd tried Podium for 6 months but cancelled because nobody on her team used it.</div>
+          <div class="case-solution-label">What we did</div>
+          <div class="case-solution">Flagged and got the fake reviews removed through Google's review policy process. Fully optimized her GBP, responding to all existing reviews for the first time. Built the review sequence — with 4 roofing techs each completing 2–3 jobs daily, the volume of review requests was significant. Within 4 months her rating climbed to 4.7 stars on 91 reviews.</div>
+          <div class="case-quote">"I tried Podium and hated it — nobody on my team ever used the software. MapAuthorityPro set everything up so my guys don't have to do anything except book the job. My rating went from 3.8 to 4.7 and I cancelled my Google Ads because I don't need them anymore."<div class="case-author">— Sarah Roberts, owner</div></div>
+        </div>
+        <div class="case-right">
+          <div class="case-results-label">Results after 120 days</div>
+          <div class="result-metrics">
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Google reviews</span><span>28 → 91</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:90%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">+225% increase</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Star rating</span><span>3.8★ → 4.7★</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:78%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Fake reviews removed, real ones flooding in</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Google Ads spend</span><span>$800 → $0</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:100%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">Organic GBP replaced paid traffic</div>
+            </div>
+            <div class="metric-bar-wrap">
+              <div class="metric-label"><span>Profile-to-call conversion</span><span>+55%</span></div>
+              <div class="metric-bar"><div class="metric-fill" style="width:65%"></div></div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px">More views converting to actual calls</div>
+            </div>
+          </div>
+          <div class="before-after">
+            <div class="ba-row"><span class="ba-label">Reviews</span><span class="ba-before">28</span><span class="ba-arrow">→</span><span class="ba-after">91</span></div>
+            <div class="ba-row"><span class="ba-label">Rating</span><span class="ba-before">3.8★</span><span class="ba-arrow">→</span><span class="ba-after">4.7★</span></div>
+            <div class="ba-row"><span class="ba-label">Google Ads spend</span><span class="ba-before">$800/mo</span><span class="ba-arrow">→</span><span class="ba-after">$0</span></div>
+            <div class="ba-row"><span class="ba-label">Net monthly saving</span><span class="ba-before">—</span><span class="ba-arrow">→</span><span class="ba-after">+$401/mo</span></div>
+          </div>
+          <span class="case-package">Growth — $399/mo</span>
+          <span class="timeline-tag">Results measured at 120 days</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AGGREGATE METRICS -->
+<section class="metrics-section">
+  <div class="metrics-inner">
+    <div class="eyebrow" style="color:var(--cyan)">Across all clients</div>
+    <h2 class="section-title" style="color:#fff">What the numbers look like<br>at 90 days on average</h2>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-big">3.2x</div>
+        <div class="metric-title">Review count growth</div>
+        <div class="metric-desc">Average increase in total Google reviews within the first 90 days. Most clients start between 10 and 30 reviews and end the quarter above 60.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-big">4.8★</div>
+        <div class="metric-title">Average rating at 6 months</div>
+        <div class="metric-desc">Clients who start below 4.2 stars consistently reach 4.6–4.9 by month 6. The satisfaction gate routes unhappy customers to private feedback before they hit Google.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-big">28%</div>
+        <div class="metric-title">Quote recovery rate</div>
+        <div class="metric-desc">Average percentage of previously silent quotes that convert after the 3-touch follow-up sequence. For a contractor sending 15 quotes a week that's 4 extra jobs per month.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-big">12%</div>
+        <div class="metric-title">Reactivation conversion</div>
+        <div class="metric-desc">Of past customers contacted in a quarterly reactivation campaign, 12% on average book a job within 30 days. From people who already trust the business.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-big">5</div>
+        <div class="metric-title">Days to go live</div>
+        <div class="metric-desc">From payment to first automated review request firing. Most platforms require weeks of self-setup. Every client is fully operational within one work week.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-big">+180%</div>
+        <div class="metric-title">GBP profile views</div>
+        <div class="metric-desc">Average increase in Google Business Profile views within 60 days of optimization. More views from better category matching, more photos, and higher review velocity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTOMATION RESULTS -->
+<section class="auto-results-section">
+  <div class="auto-results-inner">
+    <div class="eyebrow">By automation</div>
+    <h2 class="section-title">What each automation<br>delivers on its own</h2>
+    <p class="section-sub" style="margin-bottom:0">Every client gets all 7. Here's what each one contributes independently.</p>
+    <div class="auto-results-grid">
+      <div class="ar-card">
+        <div class="ar-icon">⭐</div>
+        <div class="ar-num">3.2<span>x</span></div>
+        <div class="ar-title">Review request sequence</div>
+        <div class="ar-desc">The satisfaction check + timed follow-up sequence generates 3.2x more reviews than asking manually or not asking at all. Timing at 90 minutes post-job is the key variable.</div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-icon">🤖</div>
+        <div class="ar-num">100<span>%</span></div>
+        <div class="ar-title">AI review reply rate</div>
+        <div class="ar-desc">Every single review gets a personalized reply within minutes. Before setup, most clients replied to fewer than 30% of reviews — usually only the negative ones.</div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-icon">💰</div>
+        <div class="ar-num">28<span>%</span></div>
+        <div class="ar-title">Lost estimate recovery</div>
+        <div class="ar-desc">28% of previously silent quotes convert after the automated 3-touch follow-up. The second message on day 5 has the highest conversion rate of the three.</div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-icon">🔄</div>
+        <div class="ar-num">12<span>%</span></div>
+        <div class="ar-title">Customer reactivation</div>
+        <div class="ar-desc">12% of lapsed customers contacted in a quarterly campaign book within 30 days. For a client with 100 past customers that's 12 jobs from a single campaign that costs nothing to run.</div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-icon">🎁</div>
+        <div class="ar-num">8<span>%</span></div>
+        <div class="ar-title">Referral campaign</div>
+        <div class="ar-desc">8% of happy customers who receive the referral SMS 7 days after their review send a referral within 2 weeks. Timing to peak happiness is what makes this work where random blasts don't.</div>
+      </div>
+      <div class="ar-card">
+        <div class="ar-icon">📞</div>
+        <div class="ar-num">0</div>
+        <div class="ar-title">Missed calls lost</div>
+        <div class="ar-desc">Every missed call now gets an instant text-back and a follow-up if unanswered after 2 hours. Clients consistently report converting calls they would have permanently lost before setup.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-section">
+  <div class="testi-inner">
+    <div class="eyebrow">What clients say</div>
+    <h2 class="section-title">In their own words</h2>
+    <div class="testi-masonry">
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Went from 14 reviews to 61 in three months. My tech books the job in an app and the reviews just come in. I thought it was too good to be true."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#0B1437">MJ</div><div><div class="testi-name">Mike Johnson</div><div class="testi-biz">Mike's Plumbing, Ohio</div></div></div>
+        <div class="testi-result">↑ 14 → 61 reviews in 90 days</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"The lost estimate recovery alone paid for the service. Four jobs in month one that I would have written off. The follow-up texts feel personal, not spammy at all."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#064E3B">CA</div><div><div class="testi-name">Carlos Alvarez</div><div class="testi-biz">Cool Air HVAC, Texas</div></div></div>
+        <div class="testi-result">↑ $1,520 recovered in month 1</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I tried Podium and hated the contract. MapAuthorityPro set everything up in a week. My rating went from 3.8 to 4.7 and I cancelled my Google Ads — I don't need them anymore."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#1E1B4B">SR</div><div><div class="testi-name">Sarah Roberts</div><div class="testi-biz">TopRoof Roofing, Florida</div></div></div>
+        <div class="testi-result">↑ 3.8★ → 4.7★ in 120 days</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"My Google profile went from completely invisible to showing up first for 'electrician near me' in my zip code. Setup was 5 days and I haven't touched anything since."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#7C2D12">DR</div><div><div class="testi-name">Dave Rodriguez</div><div class="testi-biz">Fast Fix Electric, Arizona</div></div></div>
+        <div class="testi-result">↑ #8 → #1 local ranking</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"The monthly report shows exactly what we're getting. Review count, rating, calls from Google. I know exactly what I'm paying for every month. No guessing."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#134E4A">LP</div><div><div class="testi-name">Lisa Park</div><div class="testi-biz">Fresh Clean Services, Georgia</div></div></div>
+        <div class="testi-result">↑ 8 → 44 reviews in 4 months</div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"We have three techs running jobs all day. Before this, we had 19 reviews from 8 years in business. Now we get 3–5 new reviews every week without anyone doing anything manually."</div>
+        <div class="testi-author"><div class="testi-avatar" style="background:#312E81">TK</div><div><div class="testi-name">Tom Kowalski</div><div class="testi-biz">Kowalski HVAC, Michigan</div></div></div>
+        <div class="testi-result">↑ 19 → 71 reviews in 5 months</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <h2>Want results like<br><span>these for your business?</span></h2>
+    <p>Book a free 15-minute call. We'll pull up your Google profile live and show you exactly what's missing and what we'd fix first.</p>
+    <div class="cta-actions">
+      <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" class="btn-white">Book a free call →</a>
+      <a href="mapauthoritypro-pricing.html" class="btn-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Map<span>Authority</span>Pro</a>
+        <p>Done-for-you Google reputation management for US service businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="mapauthoritypro-services.html#reviews">Review automation</a>
+        <a href="mapauthoritypro-services.html#gbp">GBP optimization</a>
+        <a href="mapauthoritypro-services.html#ai-replies">AI review replies</a>
+        <a href="mapauthoritypro-services.html#lost-estimates">Lost estimate recovery</a>
+        <a href="mapauthoritypro-services.html#reactivation">Customer reactivation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mapauthoritypro-how-it-works.html">How it works</a>
+        <a href="mapauthoritypro-pricing.html">Pricing</a>
+        <a href="mapauthoritypro-results.html">Results</a>
+        <a href="mapauthoritypro-about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get started</h4>
+        <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
+        <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
+        <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
+        <a href="mailto:adamberrie@mapauthoritypro.com">Contact us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MapAuthorityPro. All rights reserved.</span>
+      <span><a href="mapauthoritypro-privacy.html" style="color:inherit">Privacy Policy</a> · <a href="mapauthoritypro-terms.html" style="color:inherit">Terms of Service</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('mobileMenu')
+  const btn=document.querySelector('.hamburger')
+  if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){menu.classList.remove('open')}
+})
+</script>
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0B1437;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div style="font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:700px;">
+    🍪 We use cookies to improve your experience and analyse site traffic. By continuing to use this site you accept our 
+    <a href="mapauthoritypro-privacy.html" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a>.
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#06B6D4;color:#0B1437;border:none;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;">Accept</button>
+    <button onclick="declineCookies()" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:500;cursor:pointer;">Decline</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookieConsent','accepted');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookieConsent','declined');
+  document.getElementById('cookieBanner').style.display='none';
+}
+</script>
+</body>
+</html>

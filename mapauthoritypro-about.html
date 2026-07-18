@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;
+  --cyan:#06B6D4;
+  --cyan-light:#E0F7FA;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --text:#0B1437;
+  --muted:#64748B;
+  --border:#E2E8F0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(11,20,55,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.nav-inner{
+  max-width:1160px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;
+  position:relative;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:800;
+  color:#fff;text-decoration:none;letter-spacing:-0.3px;
+  z-index:1001;position:relative;
+}
+.nav-logo span{color:#06B6D4}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001;}
+.nav-links li{position:relative;}
+.nav-links a{
+  color:rgba(255,255,255,0.75);
+  text-decoration:none;font-size:14px;font-weight:500;
+  padding:8px 14px;border-radius:7px;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s,background .15s;
+  white-space:nowrap;
+}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block;}
+.nav-links li:hover .chevron{transform:rotate(180deg)}
+
+/* DROPDOWN — fixed so it never overlaps content and is always clickable */
+.dropdown{
+  position:absolute;
+  top:100%;
+  left:50%;
+  transform:translateX(-50%);
+  padding-top:8px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s;
+  z-index:9999;
+  min-width:240px;
+}
+.nav-links li:hover .dropdown{
+  opacity:1;
+  pointer-events:auto;
+}
+.dropdown-inner{
+  background:#ffffff;
+  border:1px solid #E2E8F0;
+  border-radius:12px;
+  padding:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+}
+.dropdown a{
+  color:#0B1437 !important;
+  font-size:13.5px;font-weight:500;
+  padding:8px 12px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;
+  background:transparent !important;
+  text-decoration:none;
+  width:100%;
+}
+.dropdown a:hover{background:#F7F8FC !important;color:#0B1437 !important;}
+.dropdown-icon{
+  width:30px;height:30px;border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;flex-shrink:0;
+}
+.dd-text{display:flex;flex-direction:column}
+.dd-label{font-size:13px;font-weight:500;color:#0B1437}
+.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
+
+.nav-cta{
+  background:#06B6D4;color:#0B1437;
+  font-size:13.5px;font-weight:600;
+  padding:9px 20px;border-radius:8px;
+  text-decoration:none;white-space:nowrap;
+  transition:background .15s;
+  position:relative;z-index:1001;
+}
+.nav-cta:hover{background:#08C9E8;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative;}
+.hamburger svg{width:22px;height:22px}
+.mobile-menu{
+  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+  background:#0B1437;z-index:999;padding:24px;overflow-y:auto;
+}
+.mobile-menu.open{display:block}
+.mobile-menu a{
+  display:block;color:rgba(255,255,255,0.8);text-decoration:none;
+  font-size:16px;font-weight:500;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .mm-cta{
+  margin-top:20px;background:#06B6D4;color:#0B1437;
+  text-align:center;border-radius:10px;font-weight:600;border:none;
+}
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+}
+/* PAGE HERO */
+.page-hero{background:var(--navy);padding:140px 24px 96px;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.04) 1px,transparent 1px);background-size:60px 60px}
+.hero-glow{position:absolute;top:-200px;right:-100px;width:700px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1160px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+.hero-inner h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4.5vw,58px);font-weight:800;color:#fff;line-height:1.08;letter-spacing:-1px;margin-bottom:20px}
+.hero-inner h1 span{color:var(--cyan)}
+.hero-inner p{font-size:17px;color:rgba(255,255,255,0.55);line-height:1.75}
+.founder-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:36px;text-align:center}
+.founder-avatar{width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),#0B1437);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:800;color:#fff;font-family:'Playfair Display',serif;border:3px solid rgba(6,182,212,0.3)}
+.founder-name{font-size:20px;font-weight:600;color:#fff;margin-bottom:4px}
+.founder-title{font-size:13.5px;color:var(--cyan);margin-bottom:16px}
+.founder-bio{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.7;text-align:left}
+.founder-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;justify-content:center}
+.founder-tag{font-size:11.5px;font-weight:500;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);padding:4px 10px;border-radius:99px}
+
+/* STORY */
+.story-section{padding:88px 24px}
+.story-inner{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.story-text h2{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-0.6px;margin-bottom:24px}
+.story-text h2 span{color:var(--cyan)}
+.story-para{font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.story-pull{border-left:3px solid var(--cyan);padding-left:20px;margin:28px 0}
+.story-pull p{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);line-height:1.4;font-style:italic}
+.story-aside{display:flex;flex-direction:column;gap:20px}
+.aside-card{background:var(--off);border:1px solid var(--border);border-radius:14px;padding:24px}
+.aside-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px}
+.aside-num span{color:var(--cyan)}
+.aside-label{font-size:14px;color:var(--muted);line-height:1.5}
+.aside-card.dark{background:var(--navy);border-color:rgba(6,182,212,0.2)}
+.aside-card.dark .aside-num{color:#fff}
+.aside-card.dark .aside-label{color:rgba(255,255,255,0.5)}
+
+/* VALUES */
+.values-section{background:var(--off);padding:88px 24px}
+.values-inner{max-width:1160px;margin:0 auto}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-0.6px;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--muted);line-height:1.7;max-width:520px;margin-bottom:48px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .2s}
+.value-card:hover{border-color:var(--cyan);box-shadow:0 8px 30px rgba(6,182,212,0.08);transform:translateY(-3px)}
+.value-icon{font-size:28px;margin-bottom:14px}
+.value-title{font-size:17px;font-weight:600;color:var(--navy);margin-bottom:8px}
+.value-text{font-size:14px;color:var(--muted);line-height:1.7}
+
+/* PHILOSOPHY */
+.philosophy-section{background:var(--navy);padding:88px 24px}
+.philosophy-inner{max-width:960px;margin:0 auto}
+.philosophy-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:rgba(255,255,255,0.05);border-radius:16px;overflow:hidden;margin-top:48px}
+.philosophy-item{background:rgba(255,255,255,0.02);padding:36px;transition:background .2s}
+.philosophy-item:hover{background:rgba(6,182,212,0.05)}
+.phi-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.phi-label::before{content:'';width:16px;height:1.5px;background:var(--cyan)}
+.phi-title{font-size:18px;font-weight:600;color:#fff;margin-bottom:10px}
+.phi-text{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.75}
+
+/* COMPETITORS SECTION */
+.diff-section{padding:88px 24px}
+.diff-inner{max-width:960px;margin:0 auto}
+.diff-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:48px}
+.diff-table th{padding:12px 16px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);border-bottom:2px solid var(--border);text-transform:uppercase;letter-spacing:.5px}
+.diff-table th:first-child{text-align:left}
+.diff-table th.us{color:var(--cyan)}
+.diff-table td{padding:13px 16px;border-bottom:1px solid var(--border);text-align:center;color:var(--muted)}
+.diff-table td:first-child{text-align:left;color:var(--navy);font-weight:500}
+.diff-table tr:hover td{background:var(--off)}
+.good{color:#16A34A;font-weight:600}
+.bad{color:#94A3B8}
+.us-col{background:rgba(6,182,212,0.03)}
+
+/* PROMISE */
+.promise-section{background:var(--off);padding:88px 24px}
+.promise-inner{max-width:960px;margin:0 auto}
+.promise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--border);border-radius:16px;overflow:hidden;margin-top:48px}
+.promise-item{background:var(--white);padding:28px 24px;text-align:center}
+.promise-icon{font-size:28px;margin-bottom:10px}
+.promise-title{font-size:15px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.promise-text{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* CTA */
+.cta-section{background:var(--navy);padding:88px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:800px;height:600px;background:radial-gradient(circle,rgba(6,182,212,0.1) 0%,transparent 70%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,50px);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-1px;margin-bottom:14px}
+.cta-section h2 span{color:var(--cyan)}
+.cta-section p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:36px}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--navy);font-size:15px;font-weight:600;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-white:hover{background:var(--cyan);transform:translateY(-2px)}
+.btn-ghost{border:1.5px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.75);font-size:15px;font-weight:500;padding:14px 28px;border-radius:10px;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:#fff;color:#fff}
+
+/* FOOTER */
+footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;display:block;margin-bottom:12px}
+.footer-brand .footer-logo span{color:var(--cyan)}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:12.5px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px}
+
+@media(max-width:900px){
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:block}
+  .hero-inner{grid-template-columns:1fr}
+  .story-inner{grid-template-columns:1fr}
+  .values-grid{grid-template-columns:1fr 1fr}
+  .philosophy-grid{grid-template-columns:1fr}
+  .promise-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .values-grid{grid-template-columns:1fr}
+  .promise-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+  .page-hero,.story-section,.values-section,.philosophy-section,.diff-section,.promise-section,.cta-section{padding:64px 20px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <ul class="nav-links">
+      <li>
+        <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
+          <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
+          <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
+          <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
+          <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
+          <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
+        </div>
+      </li>
+      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
+      <li>
+        <a href="#">Company <span class="chevron">▾</span></a>
+        <div class="dropdown">
+          <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
+          <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
+          <a href="mailto:adamberrie@mapauthoritypro.com"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">adamberrie@mapauthoritypro.com</span></span></a>
+        </div>
+      </li>
+      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+    </ul>
+    <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-services.html" style="font-weight:600">Services</a>
+  <a href="mapauthoritypro-services.html#reviews" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Review automation</a>
+  <a href="mapauthoritypro-services.html#gbp" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ GBP optimization</a>
+  <a href="mapauthoritypro-services.html#ai-replies" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ AI review replies</a>
+  <a href="mapauthoritypro-services.html#lost-estimates" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Lost estimate recovery</a>
+  <a href="mapauthoritypro-services.html#reactivation" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Customer reactivation</a>
+  <a href="mapauthoritypro-services.html#referrals" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Referral campaigns</a>
+  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-pricing.html">Pricing</a>
+  <a href="mapauthoritypro-about.html">About</a>
+  <a href="mapauthoritypro-results.html">Results</a>
+  <a href="mailto:adamberrie@mapauthoritypro.com">Contact</a>
+  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">About us</div>
+      <h1>We built the service<br>we wished <span>existed</span></h1>
+      <p>Every reputation tool we found was software that left business owners to figure it out themselves. We built a done-for-you service instead — because most contractors don't want software, they want results.</p>
+    </div>
+    <div class="founder-card">
+      <div class="founder-avatar">AB</div>
+      <div class="founder-name">Adam Berrie</div>
+      <div class="founder-title">Founder, MapAuthorityPro</div>
+      <div class="founder-bio">Started MapAuthorityPro after watching too many great local businesses lose customers to inferior competitors who just had better Google profiles. Adam built the full automation system from the ground up — every workflow, every SMS template, every piece of the delivery process — so service businesses can compete without hiring a marketing team.</div>
+      <div class="founder-tags">
+        <span class="founder-tag">GHL certified</span>
+        <span class="founder-tag">Local SEO</span>
+        <span class="founder-tag">Marketing automation</span>
+        <span class="founder-tag">US service businesses</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section">
+  <div class="story-inner">
+    <div class="story-text">
+      <div class="eyebrow">The story</div>
+      <h2>Why we built this<br><span>from scratch</span></h2>
+      <p class="story-para">Most local service businesses are run by people who are exceptional at their trade — plumbing, roofing, HVAC, dental work — but who have no system for turning happy customers into public reviews. They rely on word of mouth, hope their Google profile looks decent, and lose job after job to competitors with stronger online reputations.</p>
+      <p class="story-para">The tools that exist to solve this — Podium, Birdeye, NiceJob — all make the same mistake. They sell software and leave you to figure it out. A plumber running five jobs a day does not have time to manage automation campaigns, learn a CRM, or build review sequences from scratch. So the software sits unused and the reviews keep not coming.</p>
+      <div class="story-pull">
+        <p>"The difference isn't the software. It's having a person who actually manages it for you."</p>
+      </div>
+      <p class="story-para">We built MapAuthorityPro as a done-for-you service from day one. We handle the setup, the optimization, the testing, the monthly reporting, and all seven automations that run in the background. The contractor books the job. Everything after that is us.</p>
+    </div>
+    <div class="story-aside">
+      <div class="aside-card">
+        <div class="aside-num">7</div>
+        <div class="aside-label">Automations running for every client — review requests, AI replies, referrals, lost estimates, reactivation, maintenance reminders, missed calls</div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-num">5 <span style="font-size:24px">days</span></div>
+        <div class="aside-label">From signup to fully live — most platforms take weeks of self-setup. We do it all in a week.</div>
+      </div>
+      <div class="aside-card dark">
+        <div class="aside-num" style="color:var(--cyan)">$0</div>
+        <div class="aside-label">Setup fee. Ever. Because a service you have to pay to start before seeing results is a service that starts the relationship wrong.</div>
+      </div>
+      <div class="aside-card">
+        <div class="aside-num">30 <span style="font-size:24px">days</span></div>
+        <div class="aside-label">Cancel notice — no annual contracts, no full-year balance due. We earn your business every single month.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="values-inner">
+    <div class="eyebrow">What we believe</div>
+    <h2 class="section-title">Six principles we<br>actually build by</h2>
+    <p class="section-sub">These aren't marketing copy. They're the decisions we make every time we onboard a client or build a new feature.</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Done-for-you or nothing</div>
+        <div class="value-text">We will never sell you software and walk away. Every client gets a fully built and tested system before they go live. If you have to figure anything out yourself, we've failed at our job.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">📞</div>
+        <div class="value-title">A real person answers</div>
+        <div class="value-text">No AI chatbot support. No 7-day ticket queue. You get direct access to a real person who knows your account and your business. That's not scalable — it's the point.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔓</div>
+        <div class="value-title">No traps, ever</div>
+        <div class="value-text">No annual contracts. No setup fees. No "activation charges." No balance due if you cancel. We have watched Podium charge clients $3,000 to exit a contract. That is not how we operate.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">📊</div>
+        <div class="value-title">Show the work every month</div>
+        <div class="value-text">Every client gets a monthly report showing exactly what happened — review count, rating changes, quote recovery rate, reactivation results. You should always know what you're paying for.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⚡</div>
+        <div class="value-title">Speed is a feature</div>
+        <div class="value-text">You're live in 5 days. The review request fires 90 minutes after the job ends. The missed call text-back fires in seconds. Timing is everything in reputation management — slow systems lose customers.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">One market, done right</div>
+        <div class="value-text">We work exclusively with single-location US service businesses. We don't try to serve enterprise chains, e-commerce brands, or international companies. Depth over breadth — we know this market inside out.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy-section">
+  <div class="philosophy-inner">
+    <div class="eyebrow" style="color:var(--cyan)">How we think</div>
+    <h2 class="section-title" style="color:#fff">The philosophy behind<br>every decision we make</h2>
+    <div class="philosophy-grid">
+      <div class="philosophy-item">
+        <div class="phi-label">On software vs service</div>
+        <div class="phi-title">Tools don't get results. People do.</div>
+        <div class="phi-text">GoHighLevel, Podium, Birdeye — they're all just tools. What makes a reputation system actually work is someone who sets it up correctly, tests it thoroughly, monitors it monthly, and fixes it when something breaks. We are that person for every client.</div>
+      </div>
+      <div class="philosophy-item">
+        <div class="phi-label">On pricing</div>
+        <div class="phi-title">Simple pricing is a form of respect.</div>
+        <div class="phi-text">Hidden fees, annual contracts, and add-on pricing are ways of extracting value from people who don't have time to read the fine print. We charge a flat monthly fee that covers everything. No surprises on your second invoice.</div>
+      </div>
+      <div class="philosophy-item">
+        <div class="phi-label">On reviews</div>
+        <div class="phi-title">Timing beats everything.</div>
+        <div class="phi-text">The difference between a customer who leaves a review and one who doesn't is almost always timing. Ask 90 minutes after the job — when the experience is fresh and the contractor is still top of mind — and you get 3x the response rate of asking 3 days later.</div>
+      </div>
+      <div class="philosophy-item">
+        <div class="phi-label">On growth</div>
+        <div class="phi-title">One market, deeply understood.</div>
+        <div class="phi-text">We could have built this for restaurants, hotels, or e-commerce. We chose US service trades because we understand the workflow — job bookings, field technicians, seasonal demand, quote-based selling — and we built a system that fits that workflow exactly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE COMPARE -->
+<section class="diff-section">
+  <div class="diff-inner">
+    <div class="eyebrow">How we compare</div>
+    <h2 class="section-title">Us vs the alternatives</h2>
+    <p style="font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:0">The major platforms have great software. The difference is everything around the software.</p>
+    <div style="overflow-x:auto">
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;width:30%"></th>
+          <th class="us">MapAuthorityPro</th>
+          <th>Podium</th>
+          <th>Birdeye</th>
+          <th>NiceJob</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Setup fee</td><td class="us-col good">None</td><td class="bad">$500–1,500</td><td class="bad">$500+</td><td class="good">None</td></tr>
+        <tr><td>Annual contract</td><td class="us-col good">No — 30 day cancel</td><td class="bad">Yes — full balance if exit</td><td class="bad">Yes — 8% renewal fee</td><td class="good">No</td></tr>
+        <tr><td>Done-for-you setup</td><td class="us-col good">Yes — we build everything</td><td class="bad">Self-serve</td><td class="bad">Self-serve</td><td class="bad">Self-serve</td></tr>
+        <tr><td>GBP optimization included</td><td class="us-col good">Yes</td><td class="bad">No</td><td class="bad">No</td><td class="bad">No</td></tr>
+        <tr><td>Lost estimate recovery</td><td class="us-col good">Yes — unique to us</td><td class="bad">No</td><td class="bad">No</td><td class="bad">No</td></tr>
+        <tr><td>AI review replies</td><td class="us-col good">Included</td><td class="bad">+$99/mo add-on</td><td class="good">Included</td><td class="good">Included 2026</td></tr>
+        <tr><td>Human point of contact</td><td class="us-col good">Direct access</td><td class="bad">AI chatbot first</td><td class="bad">7–14 day support</td><td class="bad">Web portal only</td></tr>
+        <tr><td>Monthly report</td><td class="us-col good">Branded PDF</td><td class="bad">Dashboard only</td><td class="bad">Dashboard only</td><td class="bad">No report</td></tr>
+        <tr><td>Starting price</td><td class="us-col good">$399/mo</td><td class="bad">$399/mo + add-ons</td><td class="bad">$299/mo + add-ons</td><td class="good">$75/mo (self-serve)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- OUR PROMISE -->
+<section class="promise-section">
+  <div class="promise-inner">
+    <div class="eyebrow">Our promise</div>
+    <h2 class="section-title">What you can always<br>count on from us</h2>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="promise-icon">⚡</div>
+        <div class="promise-title">Live in 5 days</div>
+        <div class="promise-text">From signup to first automated review request firing — 5 days, guaranteed.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📊</div>
+        <div class="promise-title">Report by the 5th</div>
+        <div class="promise-text">Your monthly performance report lands in your inbox by the 5th of every month. Always.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📞</div>
+        <div class="promise-title">Same-day response</div>
+        <div class="promise-text">Any message you send us gets a response the same business day. Not a ticket. A reply.</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🔓</div>
+        <div class="promise-title">Exit any time</div>
+        <div class="promise-text">30 days written notice. No penalties, no questions, no balance due. We keep clients by delivering results.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <h2>Ready to work with<br><span>someone who handles it all?</span></h2>
+    <p>Book a free 15-minute call. We'll check your Google profile live and show you exactly what we'd fix and automate for your business.</p>
+    <div class="cta-actions">
+      <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" class="btn-white">Book a free call →</a>
+      <a href="mapauthoritypro-pricing.html" class="btn-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Map<span>Authority</span>Pro</a>
+        <p>Done-for-you Google reputation management for US service businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="mapauthoritypro-services.html#reviews">Review automation</a>
+        <a href="mapauthoritypro-services.html#gbp">GBP optimization</a>
+        <a href="mapauthoritypro-services.html#ai-replies">AI review replies</a>
+        <a href="mapauthoritypro-services.html#lost-estimates">Lost estimate recovery</a>
+        <a href="mapauthoritypro-services.html#reactivation">Customer reactivation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mapauthoritypro-how-it-works.html">How it works</a>
+        <a href="mapauthoritypro-pricing.html">Pricing</a>
+        <a href="mapauthoritypro-results.html">Results</a>
+        <a href="mapauthoritypro-about.html">About</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get started</h4>
+        <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
+        <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
+        <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
+        <a href="mailto:adamberrie@mapauthoritypro.com">Contact us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 MapAuthorityPro. All rights reserved.</span>
+      <span><a href="mapauthoritypro-privacy.html" style="color:inherit">Privacy Policy</a> · <a href="mapauthoritypro-terms.html" style="color:inherit">Terms of Service</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+document.addEventListener('click',function(e){
+  const menu=document.getElementById('mobileMenu')
+  const btn=document.querySelector('.hamburger')
+  if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){menu.classList.remove('open')}
+})
+</script>
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0B1437;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+  <div style="font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:700px;">
+    🍪 We use cookies to improve your experience and analyse site traffic. By continuing to use this site you accept our 
+    <a href="mapauthoritypro-privacy.html" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a>.
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:#06B6D4;color:#0B1437;border:none;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;">Accept</button>
+    <button onclick="declineCookies()" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:500;cursor:pointer;">Decline</button>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    document.getElementById('cookieBanner').style.display='flex';
+  }
+})();
+function acceptCookies(){
+  localStorage.setItem('cookieConsent','accepted');
+  document.getElementById('cookieBanner').style.display='none';
+}
+function declineCookies(){
+  localStorage.setItem('cookieConsent','declined');
+  document.getElementById('cookieBanner').style.display='none';
+}
+</script>
+</body>
+</html>
