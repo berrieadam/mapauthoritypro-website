@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Started — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;
+  --cyan:#06B6D4;
+  --cyan-light:#E0F7FA;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --text:#0B1437;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --green:#16A34A;
+  --green-light:#F0FDF4;
+  --red:#DC2626;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--off);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,20,55,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-0.3px}
+.nav-logo span{color:var(--cyan)}
+.nav-back{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.6);font-size:13.5px;font-weight:500;text-decoration:none;transition:color .15s}
+.nav-back:hover{color:#fff}
+.nav-back svg{width:16px;height:16px}
+.nav-secure{display:flex;align-items:center;gap:6px;font-size:12.5px;color:rgba(255,255,255,0.4)}
+.nav-secure svg{width:14px;height:14px;color:var(--cyan)}
+
+/* LAYOUT */
+.checkout-wrap{max-width:1040px;margin:0 auto;padding:96px 24px 64px;display:grid;grid-template-columns:1fr 380px;gap:32px;align-items:start}
+
+/* LEFT COLUMN */
+.checkout-left{}
+.step-header{margin-bottom:28px}
+.step-header h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-0.5px;margin-bottom:4px}
+.step-header p{font-size:14.5px;color:var(--muted)}
+
+/* PACKAGE SELECTOR */
+.section-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.package-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.pkg-card{background:var(--white);border:2px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all .2s;position:relative}
+.pkg-card:hover{border-color:#94A3B8}
+.pkg-card.selected{border-color:var(--cyan);background:#F0FDFF}
+.pkg-card.selected .pkg-radio{background:var(--cyan);border-color:var(--cyan)}
+.pkg-card.selected .pkg-radio::after{opacity:1}
+.pkg-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);background:#fff;margin-bottom:12px;position:relative;transition:all .2s;flex-shrink:0}
+.pkg-radio::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:#fff;opacity:0;transition:opacity .15s}
+.pkg-name{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.pkg-price{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:2px}
+.pkg-price span{font-size:14px;font-weight:500;color:var(--muted);font-family:'Inter',sans-serif}
+.pkg-desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px}
+.popular-badge{position:absolute;top:14px;right:14px;background:var(--cyan);color:var(--navy);font-size:10px;font-weight:700;padding:3px 8px;border-radius:99px;letter-spacing:.5px;text-transform:uppercase}
+
+/* WEBSITE ADDON */
+.addon-toggle-card{background:var(--white);border:2px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:24px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:16px}
+.addon-toggle-card:hover{border-color:#94A3B8}
+.addon-toggle-card.selected{border-color:var(--green);background:var(--green-light)}
+.addon-checkbox{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.addon-toggle-card.selected .addon-checkbox{background:var(--green);border-color:var(--green)}
+.addon-check-icon{color:#fff;font-size:13px;font-weight:700;opacity:0;transition:opacity .15s}
+.addon-toggle-card.selected .addon-check-icon{opacity:1}
+.addon-info{flex:1}
+.addon-title{font-size:14.5px;font-weight:600;color:var(--navy);margin-bottom:2px}
+.addon-desc{font-size:12.5px;color:var(--muted);line-height:1.5}
+.addon-price-tag{font-size:15px;font-weight:700;color:var(--navy);white-space:nowrap}
+.addon-price-tag.green{color:var(--green)}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:28px;margin-bottom:24px}
+.form-card h3{font-size:16px;font-weight:600;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12.5px;font-weight:600;color:var(--navy)}
+.form-label span{color:var(--red);margin-left:2px}
+.form-input{border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);background:#fff;transition:border-color .15s;outline:none;width:100%}
+.form-input:focus{border-color:var(--cyan)}
+.form-input.error{border-color:var(--red)}
+.form-hint{font-size:11.5px;color:var(--muted);margin-top:2px}
+.form-error{font-size:11.5px;color:var(--red);margin-top:2px;display:none}
+.form-error.show{display:block}
+select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+/* AGREEMENT */
+.agreement-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px}
+.agreement-row{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+.agreement-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all .15s}
+.agreement-box.checked{background:var(--navy);border-color:var(--navy)}
+.agreement-box.checked::after{content:'✓';color:#fff;font-size:11px;font-weight:700}
+.agreement-text{font-size:13.5px;color:var(--muted);line-height:1.6}
+.agreement-text a{color:var(--navy);font-weight:500;text-decoration:underline}
+
+/* SUBMIT */
+.submit-btn{width:100%;background:var(--cyan);color:var(--navy);font-size:16px;font-weight:700;padding:16px;border-radius:12px;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px;font-family:'Inter',sans-serif}
+.submit-btn:hover{background:#08C9E8;transform:translateY(-1px);box-shadow:0 8px 30px rgba(6,182,212,0.25)}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;box-shadow:none}
+.submit-btn svg{width:18px;height:18px}
+.submit-note{text-align:center;font-size:12px;color:var(--muted);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px}
+.submit-note svg{width:13px;height:13px;color:var(--green)}
+
+/* RIGHT COLUMN — ORDER SUMMARY */
+.order-summary{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;position:sticky;top:88px}
+.summary-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.summary-package{margin-bottom:16px}
+.summary-pkg-name{font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.summary-pkg-price{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--navy);line-height:1;margin-bottom:4px}
+.summary-pkg-period{font-size:12.5px;color:var(--muted)}
+.summary-divider{height:1px;background:var(--border);margin:16px 0}
+.summary-includes{margin-bottom:16px}
+.summary-includes-title{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.summary-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);margin-bottom:7px;line-height:1.4}
+.summary-item::before{content:'✓';color:var(--cyan);font-weight:700;flex-shrink:0;margin-top:1px}
+.summary-addon{background:var(--green-light);border:1px solid #BBF7D0;border-radius:10px;padding:12px 14px;margin-bottom:16px;display:none}
+.summary-addon.show{display:block}
+.summary-addon-title{font-size:12.5px;font-weight:600;color:var(--green);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.summary-addon-items{font-size:12px;color:#166534;line-height:1.7}
+.summary-total-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--border)}
+.summary-total-label{font-size:14px;font-weight:600;color:var(--navy)}
+.summary-total-price{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy)}
+.summary-total-period{font-size:12px;color:var(--muted);margin-top:2px;text-align:right}
+.summary-trust{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted)}
+.trust-icon{font-size:14px;flex-shrink:0}
+.summary-stripe{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);text-align:center}
+.stripe-badge{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
+.stripe-logo{font-size:13px;font-weight:700;color:#635BFF}
+
+/* SUCCESS STATE */
+.success-screen{display:none;text-align:center;padding:64px 24px;max-width:560px;margin:0 auto}
+.success-screen.show{display:block}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-light);border:2px solid #BBF7D0;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 24px}
+.success-screen h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:800;color:var(--navy);margin-bottom:12px}
+.success-screen p{font-size:16px;color:var(--muted);line-height:1.7;margin-bottom:28px}
+.success-next{background:var(--off);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:left;margin-bottom:20px}
+.success-next h3{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.success-steps{display:flex;flex-direction:column;gap:8px}
+.success-step{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--muted)}
+.success-step-num{width:22px;height:22px;border-radius:50%;background:var(--cyan);color:var(--navy);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+
+/* LOADING OVERLAY */
+.loading-overlay{display:none;position:fixed;inset:0;background:rgba(11,20,55,0.7);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-overlay.show{display:flex}
+.loading-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,0.15);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:#fff;font-size:15px;font-weight:500}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  .checkout-wrap{grid-template-columns:1fr;padding-top:88px}
+  .order-summary{position:static;order:-1}
+  .package-cards{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .form-grid{grid-template-columns:1fr}
+  .form-group.full{grid-column:1}
+  .checkout-wrap{padding:88px 16px 48px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="mapauthoritypro-home.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <a href="mapauthoritypro-pricing.html" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back to pricing
+    </a>
+    <div class="nav-secure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      Secure checkout
+    </div>
+  </div>
+</nav>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Taking you to secure payment...</div>
+</div>
+
+<!-- MAIN CHECKOUT -->
+<div id="checkoutMain">
+  <div class="checkout-wrap">
+
+    <!-- LEFT COLUMN -->
+    <div class="checkout-left">
+      <div class="step-header">
+        <h1>Start growing your reputation</h1>
+        <p>Fill in your details, choose your package, and you'll be live within 5 days.</p>
+      </div>
+
+      <!-- STEP 1 — PACKAGE -->
+      <div class="section-label">Step 1 — Choose your package</div>
+      <div class="package-cards">
+        <div class="pkg-card" id="pkg-growth" onclick="selectPackage('growth')">
+          <div class="pkg-radio" id="radio-growth"></div>
+          <div class="pkg-name">Growth</div>
+          <div class="pkg-price">$399<span>/mo</span></div>
+          <div class="pkg-desc">Review automation, GBP optimization, AI replies, lost estimate recovery, missed call text-back, monthly report.</div>
+        </div>
+        <div class="pkg-card selected" id="pkg-authority" onclick="selectPackage('authority')">
+          <div class="popular-badge">Most popular</div>
+          <div class="pkg-radio selected" id="radio-authority"></div>
+          <div class="pkg-name">Authority</div>
+          <div class="pkg-price">$699<span>/mo</span></div>
+          <div class="pkg-desc">Everything in Growth plus reactivation, referral campaigns, maintenance reminders, competitor monitoring, priority support.</div>
+        </div>
+      </div>
+
+      <!-- STEP 2 — WEBSITE ADDON -->
+      <div class="section-label">Step 2 — Add website (optional)</div>
+      <div class="addon-toggle-card" id="addonCard" onclick="toggleAddon()">
+        <div class="addon-checkbox" id="addonCheckbox">
+          <span class="addon-check-icon">✓</span>
+        </div>
+        <div class="addon-info">
+          <div class="addon-title">Add professional website</div>
+          <div class="addon-desc">5–7 page site built by us. Mobile-first, local SEO, contact form, review widget, domain + hosting. Monthly updates included.</div>
+        </div>
+        <div class="addon-price-tag" id="addonPriceTag">+$200/mo</div>
+      </div>
+
+      <!-- STEP 3 — YOUR DETAILS -->
+      <div class="form-card">
+        <h3>
+          <span style="width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span>
+          Your details
+        </h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First name<span>*</span></label>
+            <input type="text" class="form-input" id="firstName" placeholder="Mike" autocomplete="given-name">
+            <span class="form-error" id="err-firstName">Please enter your first name</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last name<span>*</span></label>
+            <input type="text" class="form-input" id="lastName" placeholder="Johnson" autocomplete="family-name">
+            <span class="form-error" id="err-lastName">Please enter your last name</span>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Business name<span>*</span></label>
+            <input type="text" class="form-input" id="businessName" placeholder="Mike's Plumbing" autocomplete="organization">
+            <span class="form-error" id="err-businessName">Please enter your business name</span>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Business email<span>*</span></label>
+            <input type="email" class="form-input" id="email" placeholder="mike@mikesplumbing.com" autocomplete="email">
+            <div class="form-hint">We'll send your welcome email and onboarding details here</div>
+            <span class="form-error" id="err-email">Please enter a valid email address</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone number<span>*</span></label>
+            <input type="tel" class="form-input" id="phone" placeholder="(614) 555-0123" autocomplete="tel">
+            <span class="form-error" id="err-phone">Please enter your phone number</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">City &amp; state<span>*</span></label>
+            <input type="text" class="form-input" id="cityState" placeholder="Columbus, Ohio" autocomplete="address-level2">
+            <span class="form-error" id="err-cityState">Please enter your city and state</span>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Business niche<span>*</span></label>
+            <select class="form-input" id="niche">
+              <option value="">Select your trade or service...</option>
+              <option>Plumbing</option>
+              <option>HVAC</option>
+              <option>Roofing</option>
+              <option>Electrical</option>
+              <option>Landscaping</option>
+              <option>Cleaning</option>
+              <option>Pest control</option>
+              <option>Dentistry</option>
+              <option>Auto repair</option>
+              <option>General contracting</option>
+              <option>Painting</option>
+              <option>Flooring</option>
+              <option>Other service business</option>
+            </select>
+            <span class="form-error" id="err-niche">Please select your niche</span>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Google Business Profile URL <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+            <input type="url" class="form-input" id="gbpUrl" placeholder="https://maps.google.com/...">
+            <div class="form-hint">Paste your GBP link if you have it — we'll find it anyway during onboarding</div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">How organized is your current customer data? <span style="font-weight:400;color:var(--muted)">(helps us plan your onboarding)</span></label>
+            <select class="form-input" id="dataOrg">
+              <option value="">Select...</option>
+              <option value="1">1 — Nothing at all, starting from zero</option>
+              <option value="2">2 — Some phone contacts, no structure</option>
+              <option value="3">3 — Basic list with names and numbers</option>
+              <option value="4">4 — Spreadsheet or invoicing tool</option>
+              <option value="5">5 — Full CRM with history and dates</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Anything we should know before onboarding? <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+            <textarea class="form-input" id="notes" rows="3" placeholder="e.g. We have 3 technicians, run about 20 jobs a week, and have been trading for 8 years..." style="resize:vertical"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 — AGREEMENT -->
+      <div class="agreement-card">
+
+        <!-- SMS CONSENT DISCLOSURE -->
+        <div style="background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:#475569;line-height:1.7">
+          <strong style="color:#0B1437;display:block;margin-bottom:6px">📱 SMS Communications — MapAuthorityPro</strong>
+          By checking the box below, you agree to receive automated SMS text messages from <strong>MapAuthorityPro</strong> (phone: +1 659-277-2501) regarding your account, service updates, review requests, appointment reminders, and promotional offers. Message frequency varies based on your activity. <strong>Message &amp; data rates may apply.</strong> Reply <strong>STOP</strong> to cancel at any time. Reply <strong>HELP</strong> for help. SMS opt-in consent is not shared with third parties or affiliates for their own marketing purposes.
+          <div style="margin-top:8px">
+            <a href="mapauthoritypro-privacy.html" target="_blank" style="color:#06B6D4;text-decoration:underline;font-size:12px">Privacy Policy</a>
+            &nbsp;·&nbsp;
+            <a href="mapauthoritypro-terms.html" target="_blank" style="color:#06B6D4;text-decoration:underline;font-size:12px">Terms of Service</a>
+          </div>
+        </div>
+
+        <!-- CHECKBOX -->
+        <div class="agreement-row" onclick="toggleAgreement()">
+          <div class="agreement-box" id="agreementBox"></div>
+          <div class="agreement-text">
+            I agree to the <a href="mapauthoritypro-terms.html" target="_blank">Terms of Service</a> and <a href="mapauthoritypro-privacy.html" target="_blank">Privacy Policy</a>. I consent to receive SMS messages from <strong>MapAuthorityPro</strong> as described above. I understand the first month is charged on signup and I can cancel with 30 days written notice at any time with no penalties.
+          </div>
+        </div>
+        <span class="form-error" id="err-agreement" style="margin-top:10px">Please agree to the terms to continue</span>
+      </div>
+
+      <!-- SUBMIT -->
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Continue to secure payment →
+      </button>
+      <div class="submit-note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Payments processed securely by Stripe. We never store your card details.
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN — ORDER SUMMARY -->
+    <div class="order-summary">
+      <div class="summary-title">📋 Order summary</div>
+
+      <div class="summary-package">
+        <div class="summary-pkg-name" id="summaryPkgName">Authority package</div>
+        <div class="summary-pkg-price" id="summaryPkgPrice">$699</div>
+        <div class="summary-pkg-period">per month · no contract · cancel anytime</div>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-includes">
+        <div class="summary-includes-title">What's included</div>
+        <div id="summaryItems">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <div class="summary-addon" id="summaryAddon">
+        <div class="summary-addon-title">✅ Website add-on included</div>
+        <div class="summary-addon-items">
+          5–7 page professional website<br>
+          Mobile-first, local SEO optimised<br>
+          Review widget + contact form<br>
+          Domain, hosting + monthly updates
+        </div>
+      </div>
+
+      <div class="summary-total-row">
+        <div>
+          <div class="summary-total-label">Total today</div>
+          <div style="font-size:11.5px;color:var(--muted)">First month, then monthly</div>
+        </div>
+        <div style="text-align:right">
+          <div class="summary-total-price" id="summaryTotal">$699</div>
+          <div class="summary-total-period">/month</div>
+        </div>
+      </div>
+
+      <div class="summary-trust">
+        <div class="trust-item"><span class="trust-icon">✓</span>No setup fee — ever</div>
+        <div class="trust-item"><span class="trust-icon">✓</span>No annual contract</div>
+        <div class="trust-item"><span class="trust-icon">✓</span>Cancel with 30 days notice</div>
+        <div class="trust-item"><span class="trust-icon">✓</span>Live within 5 business days</div>
+        <div class="trust-item"><span class="trust-icon">✓</span>Same-day response from our team</div>
+      </div>
+
+      <div class="summary-stripe">
+        <div class="stripe-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#635BFF" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Secure payment by <span class="stripe-logo">stripe</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- SUCCESS SCREEN -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">🎉</div>
+  <h1>You're all set!</h1>
+  <p>Welcome to MapAuthorityPro. We've received your details and you'll hear from us within a few hours to kick off your onboarding.</p>
+  <div class="success-next">
+    <h3>What happens next</h3>
+    <div class="success-steps">
+      <div class="success-step"><div class="success-step-num">1</div>Check your email — we'll send a welcome message and onboarding form within the hour.</div>
+      <div class="success-step"><div class="success-step-num">2</div>We request Google Business Profile access — you approve in one click.</div>
+      <div class="success-step"><div class="success-step-num">3</div>We build everything — GBP optimization, all 7 automations, contractor app setup.</div>
+      <div class="success-step"><div class="success-step-num">4</div>15-minute handoff call with your team — then you're live and the system runs itself.</div>
+    </div>
+  </div>
+  <a href="mapauthoritypro-home.html" style="display:inline-block;background:var(--navy);color:#fff;font-size:14.5px;font-weight:600;padding:13px 28px;border-radius:10px;text-decoration:none">← Back to home</a>
+</div>
+
+<script>
+// ─── STRIPE PAYMENT LINKS ─────────────────────────────────────────────────
+// Replace these with your real Stripe payment link URLs
+const STRIPE_LINKS = {
+  'growth':            'https://buy.stripe.com/REPLACE_GROWTH_ONLY',
+  'growth+website':    'https://buy.stripe.com/REPLACE_GROWTH_WEBSITE',
+  'authority':         'https://buy.stripe.com/REPLACE_AUTHORITY_ONLY',
+  'authority+website': 'https://buy.stripe.com/REPLACE_AUTHORITY_WEBSITE',
+}
+// ─────────────────────────────────────────────────────────────────────────
+
+const PACKAGES = {
+  growth: {
+    name: 'Growth package',
+    price: 399,
+    items: [
+      'Google Business Profile full optimization',
+      'GBP verification handled',
+      '8 Google Posts per month',
+      'Review request automation (SMS + email)',
+      'AI auto-reply to every Google review',
+      'Lost estimate recovery (3 follow-ups)',
+      'Missed call text-back',
+      'Monthly performance report PDF',
+    ]
+  },
+  authority: {
+    name: 'Authority package',
+    price: 699,
+    items: [
+      'Everything in Growth',
+      'Old customer reactivation (quarterly)',
+      'Referral campaign automation',
+      'Maintenance reminder sequences',
+      'AI chatbot on website (24/7 lead capture)',
+      'Competitor profile monitoring',
+      'Weekly competitor review alerts',
+      'Priority support + bi-weekly check-in',
+    ]
+  }
+}
+
+let selectedPackage = 'authority'
+let addonSelected = false
+let agreementChecked = false
+
+function selectPackage(pkg) {
+  selectedPackage = pkg
+
+  document.getElementById('pkg-growth').classList.toggle('selected', pkg === 'growth')
+  document.getElementById('pkg-authority').classList.toggle('selected', pkg === 'authority')
+  document.getElementById('radio-growth').classList.toggle('selected', pkg === 'growth')
+  document.getElementById('radio-authority').classList.toggle('selected', pkg === 'authority')
+
+  updateSummary()
+}
+
+function toggleAddon() {
+  addonSelected = !addonSelected
+  const card = document.getElementById('addonCard')
+  const checkbox = document.getElementById('addonCheckbox')
+  card.classList.toggle('selected', addonSelected)
+  checkbox.classList.toggle('checked', addonSelected)
+  document.getElementById('addonPriceTag').classList.toggle('green', addonSelected)
+  updateSummary()
+}
+
+function toggleAgreement() {
+  agreementChecked = !agreementChecked
+  document.getElementById('agreementBox').classList.toggle('checked', agreementChecked)
+  if (agreementChecked) {
+    document.getElementById('err-agreement').classList.remove('show')
+  }
+}
+
+function updateSummary() {
+  const pkg = PACKAGES[selectedPackage]
+  const websitePrice = addonSelected ? 200 : 0
+  const total = pkg.price + websitePrice
+
+  document.getElementById('summaryPkgName').textContent = pkg.name
+  document.getElementById('summaryPkgPrice').textContent = '$' + pkg.price
+  document.getElementById('summaryTotal').textContent = '$' + total
+
+  const itemsEl = document.getElementById('summaryItems')
+  itemsEl.innerHTML = pkg.items.map(i => `<div class="summary-item">${i}</div>`).join('')
+
+  document.getElementById('summaryAddon').classList.toggle('show', addonSelected)
+}
+
+function getStripeKey() {
+  const base = selectedPackage
+  const withAddon = addonSelected ? `${base}+website` : base
+  return withAddon
+}
+
+function validateForm() {
+  const fields = [
+    { id: 'firstName', errId: 'err-firstName', check: v => v.trim().length > 0 },
+    { id: 'lastName', errId: 'err-lastName', check: v => v.trim().length > 0 },
+    { id: 'businessName', errId: 'err-businessName', check: v => v.trim().length > 0 },
+    { id: 'email', errId: 'err-email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+    { id: 'phone', errId: 'err-phone', check: v => v.trim().length >= 7 },
+    { id: 'cityState', errId: 'err-cityState', check: v => v.trim().length > 0 },
+    { id: 'niche', errId: 'err-niche', check: v => v !== '' },
+  ]
+
+  let valid = true
+
+  fields.forEach(({ id, errId, check }) => {
+    const el = document.getElementById(id)
+    const errEl = document.getElementById(errId)
+    const ok = check(el.value)
+    el.classList.toggle('error', !ok)
+    errEl.classList.toggle('show', !ok)
+    if (!ok) valid = false
+  })
+
+  if (!agreementChecked) {
+    document.getElementById('err-agreement').classList.add('show')
+    valid = false
+  }
+
+  return valid
+}
+
+function collectFormData() {
+  return {
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    businessName: document.getElementById('businessName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    cityState: document.getElementById('cityState').value.trim(),
+    niche: document.getElementById('niche').value,
+    gbpUrl: document.getElementById('gbpUrl').value.trim(),
+    dataOrg: document.getElementById('dataOrg').value,
+    notes: document.getElementById('notes').value.trim(),
+    package: selectedPackage,
+    websiteAddon: addonSelected,
+    total: PACKAGES[selectedPackage].price + (addonSelected ? 200 : 0),
+  }
+}
+
+async function handleSubmit() {
+  if (!validateForm()) {
+    const firstError = document.querySelector('.form-input.error')
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    return
+  }
+
+  const btn = document.getElementById('submitBtn')
+  btn.disabled = true
+  btn.innerHTML = '<div class="loading-spinner" style="width:20px;height:20px;border-width:2px;border-color:rgba(11,20,55,0.2);border-top-color:var(--navy)"></div> Saving your details...'
+
+  const data = collectFormData()
+
+  // Backup to localStorage
+  try { localStorage.setItem('map_lead_' + Date.now(), JSON.stringify(data)) } catch(e) {}
+
+  // Show loading overlay
+  document.getElementById('loadingOverlay').classList.add('show')
+  document.querySelector('.loading-text').textContent = 'Saving your details...'
+
+  // ── SEND TO NETLIFY FUNCTION → GHL ────────────────────────────────────────
+  try {
+    const res = await fetch('/.netlify/functions/submit-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    const result = await res.json()
+    if (result.success) {
+      console.log('Lead captured in GHL:', result.ghl?.contactId)
+    } else {
+      console.warn('Lead capture issue:', result)
+    }
+  } catch (err) {
+    // Don't block checkout if function fails — lead is in localStorage as backup
+    console.warn('Lead function error (non-blocking):', err.message)
+  }
+
+  // ── REDIRECT TO STRIPE ────────────────────────────────────────────────────
+  document.querySelector('.loading-text').textContent = 'Taking you to secure payment...'
+
+  const stripeKey = getStripeKey()
+  const stripeBase = STRIPE_LINKS[stripeKey]
+  const params = new URLSearchParams({
+    prefilled_email: data.email,
+    client_reference_id: `${data.businessName.replace(/\s+/g,'-')}-${Date.now()}`,
+  })
+
+  setTimeout(() => {
+    window.location.href = `${stripeBase}?${params.toString()}`
+  }, 800)
+}
+
+// Clear errors on input
+document.addEventListener('DOMContentLoaded', () => {
+  updateSummary()
+  // pre-select authority radio visual
+  document.getElementById('radio-authority').classList.add('selected')
+
+  // Read URL params to pre-select package
+  const urlParams = new URLSearchParams(window.location.search)
+  const pkgParam = urlParams.get('pkg')
+  const addonParam = urlParams.get('addon')
+  if (pkgParam === 'growth') selectPackage('growth')
+  else selectPackage('authority')
+  if (addonParam === 'website') {
+    addonSelected = false // reset so toggle works correctly
+    toggleAddon()
+  }
+
+  document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('input', () => {
+      input.classList.remove('error')
+      const errEl = document.getElementById('err-' + input.id)
+      if (errEl) errEl.classList.remove('show')
+    })
+  })
+})
+</script>
+
+</body>
+</html>
