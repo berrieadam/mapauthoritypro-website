@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="192x192" href="favicon-192.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>How It Works — MapAuthorityPro</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,114 +27,34 @@
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;color:var(--text);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
 
-
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  background:rgba(11,20,55,0.97);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.06);
-}
-.nav-inner{
-  max-width:1160px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 24px;height:64px;
-  position:relative;
-}
-.nav-logo{
-  font-family:'Playfair Display',serif;
-  font-size:20px;font-weight:800;
-  color:#fff;text-decoration:none;letter-spacing:-0.3px;
-  z-index:1001;position:relative;
-}
-.nav-logo span{color:#06B6D4}
-.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001;}
-.nav-links li{position:relative;}
-.nav-links a{
-  color:rgba(255,255,255,0.75);
-  text-decoration:none;font-size:14px;font-weight:500;
-  padding:8px 14px;border-radius:7px;
-  display:flex;align-items:center;gap:5px;
-  transition:color .15s,background .15s;
-  white-space:nowrap;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(11,20,55,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--white);text-decoration:none;letter-spacing:-0.3px}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links li{position:relative}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:500;padding:8px 14px;border-radius:7px;display:flex;align-items:center;gap:5px;transition:color .15s,background .15s}
 .nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
-.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block;}
+.nav-links .chevron{font-size:10px;opacity:0.6;transition:transform .2s}
 .nav-links li:hover .chevron{transform:rotate(180deg)}
-
-/* DROPDOWN — fixed so it never overlaps content and is always clickable */
-.dropdown{
-  position:absolute;
-  top:100%;
-  left:50%;
-  transform:translateX(-50%);
-  padding-top:8px;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .2s;
-  z-index:9999;
-  min-width:240px;
-}
-.nav-links li:hover .dropdown{
-  opacity:1;
-  pointer-events:auto;
-}
-.dropdown-inner{
-  background:#ffffff;
-  border:1px solid #E2E8F0;
-  border-radius:12px;
-  padding:8px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.2);
-}
-.dropdown a{
-  color:#0B1437 !important;
-  font-size:13.5px;font-weight:500;
-  padding:8px 12px;border-radius:7px;
-  display:flex;align-items:center;gap:10px;
-  background:transparent !important;
-  text-decoration:none;
-  width:100%;
-}
-.dropdown a:hover{background:#F7F8FC !important;color:#0B1437 !important;}
-.dropdown-icon{
-  width:30px;height:30px;border-radius:7px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;flex-shrink:0;
-}
+.dropdown{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid var(--border);border-radius:12px;padding:8px;min-width:200px;box-shadow:0 20px 40px rgba(0,0,0,0.12);opacity:0;pointer-events:none;transform:translateX(-50%) translateY(-6px);transition:opacity .2s,transform .2s}
+.nav-links li:hover .dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.dropdown a{color:var(--navy);font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:7px;display:flex;align-items:center;gap:10px;background:transparent}
+.dropdown a:hover{background:var(--off);color:var(--navy)}
+.dropdown-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
 .dd-text{display:flex;flex-direction:column}
-.dd-label{font-size:13px;font-weight:500;color:#0B1437}
-.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
-
-.nav-cta{
-  background:#06B6D4;color:#0B1437;
-  font-size:13.5px;font-weight:600;
-  padding:9px 20px;border-radius:8px;
-  text-decoration:none;white-space:nowrap;
-  transition:background .15s;
-  position:relative;z-index:1001;
-}
+.dd-label{font-size:13px;font-weight:500;color:var(--navy)}
+.dd-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+.nav-cta{background:var(--cyan);color:var(--navy);font-size:13.5px;font-weight:600;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .15s,transform .1s}
 .nav-cta:hover{background:#08C9E8;}
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative;}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff}
 .hamburger svg{width:22px;height:22px}
-.mobile-menu{
-  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
-  background:#0B1437;z-index:999;padding:24px;overflow-y:auto;
-}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--navy);z-index:99;padding:24px;overflow-y:auto}
 .mobile-menu.open{display:block}
-.mobile-menu a{
-  display:block;color:rgba(255,255,255,0.8);text-decoration:none;
-  font-size:16px;font-weight:500;padding:14px 0;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.mobile-menu a:hover{color:#fff}
-.mobile-menu .mm-cta{
-  margin-top:20px;background:#06B6D4;color:#0B1437;
-  text-align:center;border-radius:10px;font-weight:600;border:none;
-}
-@media(max-width:900px){
-  .nav-links,.nav-cta{display:none}
-  .hamburger{display:block}
-}
+.mobile-menu a{display:block;color:rgba(255,255,255,0.8);text-decoration:none;font-size:16px;font-weight:500;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-menu .mm-cta{margin-top:20px;background:var(--cyan);color:var(--navy);text-align:center;border-radius:10px;font-weight:600;border:none}
+
 /* PAGE HERO */
 .page-hero{background:var(--navy);padding:140px 24px 96px;position:relative;overflow:hidden;text-align:center}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(6,182,212,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(6,182,212,0.04) 1px,transparent 1px);background-size:60px 60px}
@@ -269,31 +192,31 @@ footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,2
 <body>
 
 <nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+<div class="nav-inner">
+    <a href="mapauthoritypro-home.html" class="nav-logo">Map<span>Authority</span>Pro</a>
     <ul class="nav-links">
       <li>
         <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
-        <div class="dropdown">
+        <div class="dropdown"><div class="dropdown-inner">
           <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
           <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
           <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
           <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
           <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
           <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
-        </div>
+        </div></div>
       </li>
-      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-how-it-works.html" style="color:#fff"</a></li>
       <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
       <li>
         <a href="#">Company <span class="chevron">▾</span></a>
-        <div class="dropdown">
+        <div class="dropdown"><div class="dropdown-inner">
           <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
           <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
-          <a href="mailto:adamberrie@mapauthoritypro.com"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">adamberrie@mapauthoritypro.com</span></span></a>
-        </div>
+          <a href="mapauthoritypro-feature-requests.html"><span class="dropdown-icon" style="background:#F5F3FF">💬</span><span class="dd-text"><span class="dd-label">Feature requests</span><span class="dd-sub">Vote on what we build next</span></span></a>
+        </div></div>
       </li>
-      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+      <li><a href="mapauthoritypro-book-a-call.html">Book a call</a></li>
     </ul>
     <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
@@ -303,7 +226,7 @@ footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,2
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-home.html">Home</a>
   <a href="mapauthoritypro-services.html" style="font-weight:600">Services</a>
   <a href="mapauthoritypro-services.html#reviews" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Review automation</a>
   <a href="mapauthoritypro-services.html#gbp" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ GBP optimization</a>
@@ -311,12 +234,12 @@ footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,2
   <a href="mapauthoritypro-services.html#lost-estimates" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Lost estimate recovery</a>
   <a href="mapauthoritypro-services.html#reactivation" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Customer reactivation</a>
   <a href="mapauthoritypro-services.html#referrals" style="padding-left:16px;font-size:14px;color:rgba(255,255,255,0.5)">→ Referral campaigns</a>
-  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-how-it-works.html" style="color:#fff"</a>
   <a href="mapauthoritypro-pricing.html">Pricing</a>
   <a href="mapauthoritypro-about.html">About</a>
   <a href="mapauthoritypro-results.html">Results</a>
-  <a href="mailto:adamberrie@mapauthoritypro.com">Contact</a>
-  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-feature-requests.html">Feature requests</a>
+  <a href="mapauthoritypro-book-a-call.html">Book a call</a>
   <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
 </div>
 
@@ -637,7 +560,7 @@ footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,2
   <h2>Ready to see this<br><span>running for your business?</span></h2>
   <p>Book a free 15-minute call. We'll pull up your Google profile live and show you exactly what we'd fix and automate.</p>
   <div class="cta-actions">
-    <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" class="btn-primary">Book a free call →</a>
+    <a href="mapauthoritypro-book-a-call.html" class="btn-primary">Book a free call →</a>
     <a href="mapauthoritypro-pricing.html" class="btn-outline">See pricing</a>
   </div>
 </section>
@@ -657,25 +580,39 @@ footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,2
         <a href="mapauthoritypro-services.html#ai-replies">AI review replies</a>
         <a href="mapauthoritypro-services.html#lost-estimates">Lost estimate recovery</a>
         <a href="mapauthoritypro-services.html#reactivation">Customer reactivation</a>
+        <a href="mapauthoritypro-services.html#referrals">Referral campaigns</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
-        <a href="mapauthoritypro-how-it-works.html" style="color:#fff"</a>
+        <a href="mapauthoritypro-how-it-works.html">How it works</a>
         <a href="mapauthoritypro-pricing.html">Pricing</a>
         <a href="mapauthoritypro-results.html">Results</a>
         <a href="mapauthoritypro-about.html">About</a>
+        <a href="mapauthoritypro-contact.html">Contact</a>
       </div>
       <div class="footer-col">
         <h4>Get started</h4>
         <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
         <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
         <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
-        <a href="mailto:adamberrie@mapauthoritypro.com">Contact us</a>
+        <a href="mapauthoritypro-checkout.html?pkg=website">Website — $200/mo</a>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 MapAuthorityPro. All rights reserved.</span>
-      <span><a href="mapauthoritypro-privacy.html" style="color:inherit">Privacy Policy</a> · <a href="mapauthoritypro-terms.html" style="color:inherit">Terms of Service</a></span>
+    <div style="padding-top:28px;border-top:1px solid rgba(255,255,255,0.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <span style="font-size:12px;color:rgba(255,255,255,0.3)">&#169; 2026 MapAuthorityPro. All rights reserved.</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.3)">
+          <a href="mapauthoritypro-privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none">Privacy Policy</a>
+          &nbsp;&#183;&nbsp;
+          <a href="mapauthoritypro-terms.html" style="color:rgba(255,255,255,0.4);text-decoration:none">Terms of Service</a>
+        </span>
+      </div>
+      <div style="font-size:11.5px;color:rgba(255,255,255,0.25)">
+        MapAuthorityPro &#183; Hogeweg 65, 6367BB Voerendaal, Netherlands &#183;
+        <a href="tel:+16592772501" style="color:rgba(255,255,255,0.25);text-decoration:none">+1 659-277-2501</a> &#183;
+        <a href="mailto:adamberrie@mapauthoritypro.com" style="color:rgba(255,255,255,0.25);text-decoration:none">adamberrie@mapauthoritypro.com</a> &#183;
+        KvK: 78294827
+      </div>
     </div>
   </div>
 </footer>
@@ -687,34 +624,6 @@ document.addEventListener('click',function(e){
   const btn=document.querySelector('.hamburger')
   if(menu.classList.contains('open')&&!menu.contains(e.target)&&!btn.contains(e.target)){menu.classList.remove('open')}
 })
-</script>
-<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
-
-<!-- COOKIE BANNER -->
-<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;background:#0B1437;border-top:1px solid rgba(255,255,255,0.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
-  <div style="font-size:13.5px;color:rgba(255,255,255,0.75);line-height:1.6;max-width:700px;">
-    🍪 We use cookies to improve your experience and analyse site traffic. By continuing to use this site you accept our 
-    <a href="mapauthoritypro-privacy.html" style="color:#06B6D4;text-decoration:underline;">Privacy Policy</a>.
-  </div>
-  <div style="display:flex;gap:10px;flex-shrink:0;">
-    <button onclick="acceptCookies()" style="background:#06B6D4;color:#0B1437;border:none;padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;">Accept</button>
-    <button onclick="declineCookies()" style="background:transparent;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.2);padding:9px 20px;border-radius:8px;font-size:13.5px;font-weight:500;cursor:pointer;">Decline</button>
-  </div>
-</div>
-<script>
-(function(){
-  if(!localStorage.getItem('cookieConsent')){
-    document.getElementById('cookieBanner').style.display='flex';
-  }
-})();
-function acceptCookies(){
-  localStorage.setItem('cookieConsent','accepted');
-  document.getElementById('cookieBanner').style.display='none';
-}
-function declineCookies(){
-  localStorage.setItem('cookieConsent','declined');
-  document.getElementById('cookieBanner').style.display='none';
-}
 </script>
 </body>
 </html>
