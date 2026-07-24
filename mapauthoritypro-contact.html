@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — MapAuthorityPro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B1437;--cyan:#06B6D4;--white:#fff;--off:#F7F8FC;
+  --text:#0B1437;--muted:#64748B;--border:#E2E8F0;--green:#16A34A;--red:#DC2626;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;color:var(--text);background:var(--off);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(11,20,55,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px;position:relative}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;letter-spacing:-0.3px}
+.nav-logo span{color:#06B6D4}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none;position:relative;z-index:1001}
+.nav-links li{position:relative}
+.nav-links a{color:rgba(255,255,255,0.75);text-decoration:none;font-size:14px;font-weight:500;padding:8px 14px;border-radius:7px;display:flex;align-items:center;gap:5px;transition:color .15s,background .15s;white-space:nowrap}
+.nav-links a:hover{color:#fff;background:rgba(255,255,255,0.07)}
+.chevron{font-size:10px;opacity:0.6;transition:transform .2s;display:inline-block}
+.nav-links li:hover .chevron{transform:rotate(180deg)}
+.dropdown{position:absolute;top:100%;left:50%;transform:translateX(-50%);padding-top:8px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9999;min-width:240px}
+.nav-links li:hover .dropdown{opacity:1;pointer-events:auto}
+.dropdown-inner{background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:8px;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.dropdown a{color:#0B1437 !important;font-size:13.5px;font-weight:500;padding:8px 12px;border-radius:7px;display:flex;align-items:center;gap:10px;background:transparent !important;text-decoration:none;width:100%}
+.dropdown a:hover{background:#F7F8FC !important}
+.dropdown-icon{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.dd-text{display:flex;flex-direction:column}
+.dd-label{font-size:13px;font-weight:500;color:#0B1437}
+.dd-sub{font-size:11.5px;color:#64748B;margin-top:1px}
+.nav-cta{background:#06B6D4;color:#0B1437;font-size:13.5px;font-weight:600;padding:9px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.nav-cta:hover{background:#08C9E8}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:#fff;z-index:1001;position:relative}
+.hamburger svg{width:22px;height:22px}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:#0B1437;z-index:999;padding:24px;overflow-y:auto}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;color:rgba(255,255,255,0.8);text-decoration:none;font-size:16px;font-weight:500;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-menu a:hover{color:#fff}
+.mobile-menu .mm-cta{margin-top:20px;background:#06B6D4;color:#0B1437;text-align:center;border-radius:10px;font-weight:600;border:none}
+@media(max-width:900px){.nav-links,.nav-cta{display:none}.hamburger{display:block}}
+
+/* PAGE */
+.page-wrap{max-width:1040px;margin:0 auto;padding:96px 24px 64px;display:grid;grid-template-columns:1fr 400px;gap:48px;align-items:start}
+
+/* LEFT */
+.page-header{margin-bottom:32px}
+.page-header h1{font-family:'Playfair Display',serif;font-size:44px;font-weight:800;color:var(--navy);letter-spacing:-1px;margin-bottom:8px}
+.page-header p{font-size:16px;color:var(--muted);line-height:1.7}
+
+/* FORM */
+.form-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12.5px;font-weight:600;color:var(--navy)}
+.form-label span{color:var(--red)}
+.form-input{border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:14px;font-family:'Inter',sans-serif;color:var(--text);background:#fff;transition:border-color .15s;outline:none;width:100%}
+.form-input:focus{border-color:var(--cyan)}
+.form-input.error{border-color:var(--red)}
+select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.form-error{font-size:11px;color:var(--red);margin-top:2px;display:none}
+.form-error.show{display:block}
+
+/* CONSENT BOXES */
+.consent-section{margin-top:20px;display:flex;flex-direction:column;gap:10px}
+.consent-box{background:#F7F8FC;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.consent-label{display:flex;align-items:flex-start;gap:12px;cursor:pointer}
+.consent-label input[type="checkbox"]{width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--navy);cursor:pointer}
+.consent-text{font-size:12.5px;color:var(--muted);line-height:1.65}
+.consent-text strong{color:var(--navy)}
+.consent-text a{color:var(--navy);font-weight:500;text-decoration:underline}
+.consent-note{font-size:12px;color:var(--muted);margin-top:12px;padding:10px 12px;background:#F7F8FC;border-radius:7px;border:1px solid var(--border);line-height:1.6}
+
+/* SUBMIT */
+.submit-btn{width:100%;background:var(--cyan);color:var(--navy);font-size:15px;font-weight:700;padding:14px;border-radius:10px;border:none;cursor:pointer;transition:background .15s;margin-top:16px;font-family:'Inter',sans-serif}
+.submit-btn:hover{background:#08C9E8}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+/* SUCCESS */
+.success-msg{display:none;text-align:center;padding:40px 24px;background:#fff;border:1px solid var(--border);border-radius:14px}
+.success-msg.show{display:block}
+.success-icon{font-size:48px;margin-bottom:16px}
+.success-msg h3{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.success-msg p{color:var(--muted);font-size:15px}
+
+/* RIGHT SIDEBAR */
+.contact-sidebar{position:sticky;top:88px}
+.contact-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px}
+.contact-card h3{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:16px}
+.contact-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;font-size:13.5px;color:var(--muted)}
+.contact-item:last-child{margin-bottom:0}
+.contact-icon{width:36px;height:36px;border-radius:8px;background:var(--off);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.contact-item-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:2px}
+.contact-item-value{font-size:13.5px;color:var(--navy);font-weight:500}
+.contact-item-value a{color:var(--navy);text-decoration:none}
+.contact-item-value a:hover{text-decoration:underline}
+
+/* FOOTER */
+footer{background:#080f2e;padding:56px 24px 32px;border-top:1px solid rgba(255,255,255,0.06)}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .footer-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:#fff;text-decoration:none;display:block;margin-bottom:12px}
+.footer-brand .footer-logo span{color:var(--cyan)}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:220px}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.55);text-decoration:none;margin-bottom:9px;transition:color .15s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;color:rgba(255,255,255,0.3);flex-wrap:wrap;gap:8px}
+@media(max-width:860px){.page-wrap{grid-template-columns:1fr}.contact-sidebar{position:static}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.form-grid{grid-template-columns:1fr}.page-wrap{padding:88px 16px 48px}.footer-top{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Map<span>Authority</span>Pro</a>
+    <ul class="nav-links">
+      <li>
+        <a href="mapauthoritypro-services.html">Services <span class="chevron">▾</span></a>
+        <div class="dropdown"><div class="dropdown-inner">
+          <a href="mapauthoritypro-services.html#reviews"><span class="dropdown-icon" style="background:#E0F7FA">⭐</span><span class="dd-text"><span class="dd-label">Review automation</span><span class="dd-sub">Hands-free reputation growth</span></span></a>
+          <a href="mapauthoritypro-services.html#gbp"><span class="dropdown-icon" style="background:#FEF3C7">📍</span><span class="dd-text"><span class="dd-label">GBP optimization</span><span class="dd-sub">Rank higher on Google Maps</span></span></a>
+          <a href="mapauthoritypro-services.html#ai-replies"><span class="dropdown-icon" style="background:#EDE9FE">🤖</span><span class="dd-text"><span class="dd-label">AI review replies</span><span class="dd-sub">Respond to every review</span></span></a>
+          <a href="mapauthoritypro-services.html#lost-estimates"><span class="dropdown-icon" style="background:#DCFCE7">💰</span><span class="dd-text"><span class="dd-label">Lost estimate recovery</span><span class="dd-sub">Follow up on silent quotes</span></span></a>
+          <a href="mapauthoritypro-services.html#reactivation"><span class="dropdown-icon" style="background:#FEE2E2">🔄</span><span class="dd-text"><span class="dd-label">Customer reactivation</span><span class="dd-sub">Bring back lapsed customers</span></span></a>
+          <a href="mapauthoritypro-services.html#referrals"><span class="dropdown-icon" style="background:#FEF9C3">🎁</span><span class="dd-text"><span class="dd-label">Referral campaigns</span><span class="dd-sub">Turn happy customers into leads</span></span></a>
+        </div></div>
+      </li>
+      <li><a href="mapauthoritypro-how-it-works.html">How it works</a></li>
+      <li><a href="mapauthoritypro-pricing.html">Pricing</a></li>
+      <li>
+        <a href="#">Company <span class="chevron">▾</span></a>
+        <div class="dropdown"><div class="dropdown-inner">
+          <a href="mapauthoritypro-about.html"><span class="dropdown-icon" style="background:#FEE2E2">👋</span><span class="dd-text"><span class="dd-label">About</span><span class="dd-sub">Our story and mission</span></span></a>
+          <a href="mapauthoritypro-results.html"><span class="dropdown-icon" style="background:#E0F2FE">📈</span><span class="dd-text"><span class="dd-label">Results</span><span class="dd-sub">Client case studies</span></span></a>
+          <a href="mapauthoritypro-contact.html"><span class="dropdown-icon" style="background:#F0FDF4">✉️</span><span class="dd-text"><span class="dd-label">Contact</span><span class="dd-sub">Get in touch with us</span></span></a>
+        </div></div>
+      </li>
+      <li><a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a></li>
+    </ul>
+    <a href="mapauthoritypro-checkout.html" class="nav-cta">Get started →</a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="mapauthoritypro-services.html">Services</a>
+  <a href="mapauthoritypro-how-it-works.html">How it works</a>
+  <a href="mapauthoritypro-pricing.html">Pricing</a>
+  <a href="mapauthoritypro-about.html">About</a>
+  <a href="mapauthoritypro-results.html">Results</a>
+  <a href="mapauthoritypro-contact.html">Contact</a>
+  <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a call</a>
+  <a href="mapauthoritypro-checkout.html" class="mm-cta">Get started — $399/mo</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- LEFT — FORM -->
+  <div>
+    <div class="page-header">
+      <h1>Get in touch</h1>
+      <p>Have a question before signing up? Want to know if we're a fit for your business? Fill in the form and we'll get back to you within a few hours.</p>
+    </div>
+
+    <div class="form-card" id="contactForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">First name<span>*</span></label>
+          <input type="text" class="form-input" id="firstName" placeholder="Mike" autocomplete="given-name">
+          <span class="form-error" id="err-firstName">Please enter your first name</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last name<span>*</span></label>
+          <input type="text" class="form-input" id="lastName" placeholder="Johnson" autocomplete="family-name">
+          <span class="form-error" id="err-lastName">Please enter your last name</span>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Business name<span>*</span></label>
+          <input type="text" class="form-input" id="businessName" placeholder="Mike's Plumbing" autocomplete="organization">
+          <span class="form-error" id="err-businessName">Please enter your business name</span>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Email address<span>*</span></label>
+          <input type="email" class="form-input" id="email" placeholder="mike@mikesplumbing.com" autocomplete="email">
+          <span class="form-error" id="err-email">Please enter a valid email address</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone number<span>*</span></label>
+          <input type="tel" class="form-input" id="phone" placeholder="(614) 555-0123" autocomplete="tel">
+          <span class="form-error" id="err-phone">Please enter your phone number</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Business niche<span>*</span></label>
+          <select class="form-input" id="niche">
+            <option value="">Select your trade...</option>
+            <option>Plumbing</option>
+            <option>HVAC</option>
+            <option>Roofing</option>
+            <option>Electrical</option>
+            <option>Landscaping</option>
+            <option>Cleaning</option>
+            <option>Pest control</option>
+            <option>Dentistry</option>
+            <option>Auto repair</option>
+            <option>General contracting</option>
+            <option>Painting</option>
+            <option>Flooring</option>
+            <option>Other service business</option>
+          </select>
+          <span class="form-error" id="err-niche">Please select your niche</span>
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Your message<span>*</span></label>
+          <textarea class="form-input" id="message" rows="4" placeholder="Tell us about your business and what you're looking for..." style="resize:vertical"></textarea>
+          <span class="form-error" id="err-message">Please enter your message</span>
+        </div>
+      </div>
+
+      <!-- SMS CONSENT — TWO SEPARATE CHECKBOXES AS REQUIRED BY A2P -->
+      <div class="consent-section">
+        <div class="consent-note">
+          By submitting this form, <strong>MapAuthorityPro</strong> (+1 659-277-2501) may contact you about your enquiry. Message &amp; data rates may apply. Reply STOP to opt out at any time. Reply HELP for help.
+        </div>
+
+        <!-- CHECKBOX 1: MARKETING -->
+        <div class="consent-box">
+          <label class="consent-label">
+            <input type="checkbox" id="marketingConsent" name="marketing_consent" value="yes">
+            <span class="consent-text">
+              I consent to receive <strong>marketing text messages</strong>, about special offers, discounts, and service updates, from <strong>MapAuthorityPro</strong> at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+            </span>
+          </label>
+        </div>
+
+        <!-- CHECKBOX 2: NON-MARKETING -->
+        <div class="consent-box">
+          <label class="consent-label">
+            <input type="checkbox" id="nonMarketingConsent" name="non_marketing_consent" value="yes">
+            <span class="consent-text">
+              I consent to receive <strong>non-marketing text messages</strong> from <strong>MapAuthorityPro</strong> about my enquiry, appointment confirmations, service reminders, and account updates. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+            </span>
+          </label>
+        </div>
+
+        <!-- CHECKBOX 3: TERMS -->
+        <div class="consent-box">
+          <label class="consent-label">
+            <input type="checkbox" id="termsConsent" name="terms_consent" value="yes" onchange="updateTerms()">
+            <span class="consent-text">
+              I agree to the <a href="mapauthoritypro-terms.html" target="_blank">Terms of Service</a> and <a href="mapauthoritypro-privacy.html" target="_blank">Privacy Policy</a>.<span>*</span>
+            </span>
+          </label>
+          <span class="form-error" id="err-terms" style="margin-top:8px">Please agree to the terms to continue</span>
+        </div>
+
+        <!-- FOOTER LINKS -->
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">
+          <a href="mapauthoritypro-privacy.html" target="_blank" style="color:var(--muted);text-decoration:underline">Privacy Policy</a>
+          &nbsp;·&nbsp;
+          <a href="mapauthoritypro-terms.html" target="_blank" style="color:var(--muted);text-decoration:underline">Terms of Service</a>
+        </div>
+      </div>
+
+      <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        Send message →
+      </button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div class="success-icon">✉️</div>
+      <h3>Message sent!</h3>
+      <p>Thanks for reaching out. We'll get back to you within a few hours.</p>
+    </div>
+  </div>
+
+  <!-- RIGHT SIDEBAR -->
+  <div class="contact-sidebar">
+    <div class="contact-card">
+      <h3>Contact details</h3>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value"><a href="mailto:adamberrie@mapauthoritypro.com">adamberrie@mapauthoritypro.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value"><a href="tel:+16592772501">+1 659-277-2501</a></div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Address</div>
+          <div class="contact-item-value">Hogeweg 65<br>6367BB Voerendaal<br>Netherlands</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏢</div>
+        <div>
+          <div class="contact-item-label">KvK number</div>
+          <div class="contact-item-value">78294827</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3>Prefer to book a call?</h3>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;line-height:1.6">Skip the form — book a free 15-minute discovery call directly in our calendar.</p>
+      <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank" style="display:block;text-align:center;background:var(--navy);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;">Book a free call →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">Map<span>Authority</span>Pro</a>
+        <p>Done-for-you Google reputation management for US service businesses.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="mapauthoritypro-services.html#reviews">Review automation</a>
+        <a href="mapauthoritypro-services.html#gbp">GBP optimization</a>
+        <a href="mapauthoritypro-services.html#ai-replies">AI review replies</a>
+        <a href="mapauthoritypro-services.html#lost-estimates">Lost estimate recovery</a>
+        <a href="mapauthoritypro-services.html#reactivation">Customer reactivation</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="mapauthoritypro-how-it-works.html">How it works</a>
+        <a href="mapauthoritypro-pricing.html">Pricing</a>
+        <a href="mapauthoritypro-results.html">Results</a>
+        <a href="mapauthoritypro-about.html">About</a>
+        <a href="mapauthoritypro-contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get started</h4>
+        <a href="https://calendar.app.google/PjpfxJE6nJgFW4iw8" target="_blank">Book a free call</a>
+        <a href="mapauthoritypro-checkout.html?pkg=growth">Growth — $399/mo</a>
+        <a href="mapauthoritypro-checkout.html?pkg=authority">Authority — $699/mo</a>
+      </div>
+    </div>
+    <div style="max-width:1160px;margin:0 auto;padding:16px 0;border-top:1px solid rgba(255,255,255,0.06)">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <span style="font-size:12px;color:rgba(255,255,255,0.3)">© 2026 MapAuthorityPro. All rights reserved.</span>
+        <span style="font-size:12px;color:rgba(255,255,255,0.3)">
+          <a href="mapauthoritypro-privacy.html" style="color:rgba(255,255,255,0.4);text-decoration:none">Privacy Policy</a>
+          &nbsp;·&nbsp;
+          <a href="mapauthoritypro-terms.html" style="color:rgba(255,255,255,0.4);text-decoration:none">Terms of Service</a>
+        </span>
+      </div>
+      <div style="font-size:11.5px;color:rgba(255,255,255,0.25)">
+        MapAuthorityPro · Hogeweg 65, 6367BB Voerendaal, Netherlands ·
+        <a href="tel:+16592772501" style="color:rgba(255,255,255,0.25);text-decoration:none">+1 659-277-2501</a> ·
+        <a href="mailto:adamberrie@mapauthoritypro.com" style="color:rgba(255,255,255,0.25);text-decoration:none">adamberrie@mapauthoritypro.com</a> ·
+        KvK: 78294827
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="6a4e4f29ddfc7023638d945b" data-source="WEB_USER"></script>
+
+<script>
+let termsAgreed = false
+
+function updateTerms() {
+  termsAgreed = document.getElementById('termsConsent').checked
+  if (termsAgreed) document.getElementById('err-terms').classList.remove('show')
+}
+
+function validateForm() {
+  const fields = [
+    {id:'firstName', check: v => v.trim().length > 0},
+    {id:'lastName', check: v => v.trim().length > 0},
+    {id:'businessName', check: v => v.trim().length > 0},
+    {id:'email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+    {id:'phone', check: v => v.trim().length >= 7},
+    {id:'niche', check: v => v !== ''},
+    {id:'message', check: v => v.trim().length > 10},
+  ]
+  let valid = true
+  fields.forEach(({id, check}) => {
+    const el = document.getElementById(id)
+    const errEl = document.getElementById('err-' + id)
+    const ok = check(el.value)
+    el.classList.toggle('error', !ok)
+    if (errEl) errEl.classList.toggle('show', !ok)
+    if (!ok) valid = false
+  })
+  if (!termsAgreed) {
+    document.getElementById('err-terms').classList.add('show')
+    valid = false
+  }
+  return valid
+}
+
+async function handleSubmit() {
+  if (!validateForm()) {
+    const firstErr = document.querySelector('.form-input.error')
+    if (firstErr) firstErr.scrollIntoView({behavior:'smooth', block:'center'})
+    return
+  }
+
+  const btn = document.getElementById('submitBtn')
+  btn.disabled = true
+  btn.textContent = 'Sending...'
+
+  const data = {
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    businessName: document.getElementById('businessName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    niche: document.getElementById('niche').value,
+    message: document.getElementById('message').value.trim(),
+    marketingConsent: document.getElementById('marketingConsent').checked,
+    nonMarketingConsent: document.getElementById('nonMarketingConsent').checked,
+    source: 'Contact Form',
+    package: 'contact',
+    websiteAddon: false,
+    total: 0,
+  }
+
+  try {
+    await fetch('/.netlify/functions/submit-lead', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data),
+    })
+  } catch(e) { console.warn('Lead function:', e.message) }
+
+  document.getElementById('contactForm').style.display = 'none'
+  document.getElementById('successMsg').classList.add('show')
+}
+
+document.querySelectorAll('.form-input').forEach(input => {
+  input.addEventListener('input', () => {
+    input.classList.remove('error')
+    const errEl = document.getElementById('err-' + input.id)
+    if (errEl) errEl.classList.remove('show')
+  })
+})
+
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu')
+  const btn = document.querySelector('.hamburger')
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open')
+  }
+})
+</script>
+</body>
+</html>

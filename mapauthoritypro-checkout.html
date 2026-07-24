@@ -317,24 +317,38 @@ select.form-input{appearance:none;background-image:url("data:image/svg+xml,%3Csv
       <!-- STEP 4 — AGREEMENT -->
       <div class="agreement-card">
 
-        <!-- SMS CONSENT DISCLOSURE -->
-        <div style="background:#F7F8FC;border:1px solid #E2E8F0;border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:13px;color:#475569;line-height:1.7">
-          <strong style="color:#0B1437;display:block;margin-bottom:6px">SMS Communications — MapAuthorityPro</strong>
-          By checking the box below, you agree to receive automated SMS text messages from <strong>MapAuthorityPro</strong> (phone: +1 659-277-2501) regarding your account, service updates, review requests, appointment reminders, and promotional offers. Message frequency varies based on your activity. <strong>Message &amp; data rates may apply.</strong> Reply <strong>STOP</strong> to cancel at any time. Reply <strong>HELP</strong> for help. SMS opt-in consent is not shared with third parties or affiliates for their own marketing purposes.
-          <div style="margin-top:8px">
-            <a href="mapauthoritypro-privacy.html" target="_blank" style="color:#06B6D4;text-decoration:underline;font-size:12px">Privacy Policy</a>
-            &nbsp;·&nbsp;
-            <a href="mapauthoritypro-terms.html" target="_blank" style="color:#06B6D4;text-decoration:underline;font-size:12px">Terms of Service</a>
-          </div>
+        <!-- SMS CONSENT — TWO SEPARATE CHECKBOXES AS REQUIRED BY A2P -->
+        <div style="font-size:13px;color:#475569;margin-bottom:16px;padding:12px 14px;background:#F7F8FC;border-radius:8px;border:1px solid #E2E8F0;line-height:1.6">
+          By checking the boxes below you agree to receive SMS communications from <strong>MapAuthorityPro</strong>. Message &amp; data rates may apply. Reply STOP to opt out. Reply HELP for help.
         </div>
 
-        <!-- CHECKBOX — real input for A2P compliance scanning -->
-        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-top:4px">
-          <input type="checkbox" id="agreementCheckbox" name="sms_consent" value="yes"
+        <!-- CHECKBOX 1: MARKETING -->
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:14px;padding:10px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:8px">
+          <input type="checkbox" id="marketingConsent" name="marketing_consent" value="yes"
+            style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#0B1437;cursor:pointer"
+            onchange="updateConsent()">
+          <span style="font-size:12.5px;color:#475569;line-height:1.6">
+            I consent to receive <strong>marketing text messages</strong>, about special offers, discounts, and service updates, from <strong>MapAuthorityPro</strong> at the phone number provided. Message frequency may vary. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+          </span>
+        </label>
+
+        <!-- CHECKBOX 2: NON-MARKETING -->
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:14px;padding:10px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:8px">
+          <input type="checkbox" id="nonMarketingConsent" name="non_marketing_consent" value="yes"
+            style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#0B1437;cursor:pointer"
+            onchange="updateConsent()">
+          <span style="font-size:12.5px;color:#475569;line-height:1.6">
+            I consent to receive <strong>non-marketing text messages</strong> from <strong>MapAuthorityPro</strong> about appointment confirmations, review requests, service reminders, and account updates. Message frequency may vary, message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+          </span>
+        </label>
+
+        <!-- TERMS AGREEMENT -->
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;padding:10px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:8px">
+          <input type="checkbox" id="agreementCheckbox" name="terms_consent" value="yes"
             style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:#0B1437;cursor:pointer"
             onchange="toggleAgreement()">
-          <span style="font-size:13.5px;color:#64748B;line-height:1.6">
-            I agree to the <a href="mapauthoritypro-terms.html" target="_blank" style="color:#0B1437;font-weight:500;text-decoration:underline">Terms of Service</a> and <a href="mapauthoritypro-privacy.html" target="_blank" style="color:#0B1437;font-weight:500;text-decoration:underline">Privacy Policy</a>. I consent to receive automated promotional and transactional SMS text messages from <strong>MapAuthorityPro</strong> including service updates, review requests, appointment reminders, and marketing messages. Message frequency may vary. Message &amp; data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. I understand the first month is charged on signup and I can cancel with 30 days written notice at any time with no penalties.
+          <span style="font-size:12.5px;color:#475569;line-height:1.6">
+            I agree to the <a href="mapauthoritypro-terms.html" target="_blank" style="color:#0B1437;font-weight:600;text-decoration:underline">Terms of Service</a> and <a href="mapauthoritypro-privacy.html" target="_blank" style="color:#0B1437;font-weight:600;text-decoration:underline">Privacy Policy</a>. I understand the first month is charged on signup and I can cancel with 30 days written notice at any time with no penalties.
           </span>
         </label>
         <span class="form-error" id="err-agreement" style="margin-top:10px;display:none">Please agree to the terms to continue</span>
@@ -493,6 +507,12 @@ function toggleAddon() {
   checkbox.classList.toggle('checked', addonSelected)
   document.getElementById('addonPriceTag').classList.toggle('green', addonSelected)
   updateSummary()
+}
+
+function updateConsent() {
+  // Track marketing and non-marketing consent separately
+  window.marketingConsent = document.getElementById('marketingConsent').checked
+  window.nonMarketingConsent = document.getElementById('nonMarketingConsent').checked
 }
 
 function toggleAgreement() {
